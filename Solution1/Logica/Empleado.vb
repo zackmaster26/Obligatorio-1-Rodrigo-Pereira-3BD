@@ -5,8 +5,9 @@
     Private apellido As New ArrayList
     Private direccion As New ArrayList
     Private telefono As New ArrayList
-    Private sueldo As New ArrayList
+    Private sueldoBase As New ArrayList
     Private tipoEmpleado As New ArrayList
+    Private sueldoTotal As New ArrayList
 
     Public Property _cedula As ArrayList
         Get
@@ -37,10 +38,10 @@
 
     Public Property _sueldo As ArrayList
         Get
-            Return sueldo
+            Return sueldoBase
         End Get
         Set(value As ArrayList)
-            sueldo = value
+            sueldoBase = value
         End Set
     End Property
 
@@ -53,5 +54,30 @@
         End Set
     End Property
 
+    Public Property _sueldoTotal As ArrayList
+        Get
+            Return sueldoTotal
+        End Get
+        Set(value As ArrayList)
+            sueldoTotal = value
+        End Set
+    End Property
 
+    Public Property _direccion As ArrayList
+        Get
+            Return direccion
+        End Get
+        Set(value As ArrayList)
+            direccion = value
+        End Set
+    End Property
+
+    Public Property _telefono As ArrayList
+        Get
+            Return telefono
+        End Get
+        Set(value As ArrayList)
+            telefono = value
+        End Set
+    End Property
 End Class
