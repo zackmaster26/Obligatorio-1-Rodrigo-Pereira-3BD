@@ -4,10 +4,11 @@
     Private nombre As New ArrayList
     Private apellido As New ArrayList
     Private direccion As New ArrayList
-    Private telefono As New ArrayList
+    Private telefonos(999, 1) As Double
     Private sueldoBase As New ArrayList
     Private tipoEmpleado As New ArrayList
     Private sueldoTotal As New ArrayList
+
 
     Public Property _cedula As ArrayList
         Get
@@ -72,12 +73,13 @@
         End Set
     End Property
 
-    Public Property _telefono As ArrayList
+    Public Property tel As Double(,)
         Get
-            Return telefono
+            Return telefonos
         End Get
-        Set(value As ArrayList)
-            telefono = value
+        Set(value As Double(,))
+            telefonos = value
         End Set
     End Property
+
 End Class
