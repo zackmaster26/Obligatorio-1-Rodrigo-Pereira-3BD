@@ -17,15 +17,16 @@ Module Module1
     Private tipo As String
     Private dire As String
     Private contador As Integer = 0
-    Private red As ConsoleColor
 
     Private Function salir(op As String) As Boolean
         If (op = "!") Then
             Console.Write(vbNewLine)
             Console.ForegroundColor = ConsoleColor.Red
+            Console.CursorVisible = False
             Console.Write("Se borraron los datos ingresados")
             Console.ForegroundColor = ConsoleColor.White
             Threading.Thread.Sleep(2500)
+            Console.CursorVisible = True
             Return False
         End If
         Return True
@@ -33,24 +34,37 @@ Module Module1
 
     Sub Main()
 
-
-        ''Console.BackgroundColor = ConsoleColor.Red
-        ''Console.ForegroundColor = ConsoleColor.Green
+        Console.Title = "Sistema de Registro"
+        Console.ForegroundColor = ConsoleColor.White
 
         Do While op <> 3
 
             Console.Clear()
+            Console.ForegroundColor = ConsoleColor.Cyan
+            Console.Write("----------------------------------------------------------MENÚ----------------------------------------------------------")
+            Console.ForegroundColor = ConsoleColor.White
+            Console.WriteLine(vbNewLine)
             Console.WriteLine("1) Registro de Empleados")
             Console.WriteLine("2) Importe total a pagar por concepto de sueldo")
             Console.WriteLine("3) Salir")
             Console.Write("Opción: ")
-            op = Integer.Parse(Console.ReadLine())
+            Try
+                op = Integer.Parse(Console.ReadLine())
+            Catch ex As Exception
+
+            End Try
 
             Select Case op
 
                 Case 1
 
                     Console.Clear()
+                    Console.ForegroundColor = ConsoleColor.Cyan
+                    Console.Write("-------------------------------------------------REGISTRO DE EMPLEADOS-------------------------------------------------")
+                    Console.SetCursorPosition(47.5, 1)
+                    Console.Write(" (Ingrese ! para salir)")
+                    Console.ForegroundColor = ConsoleColor.White
+                    Console.WriteLine(vbNewLine)
 
                     Try
                         Console.Write("Cédula del empleado: ")
@@ -77,7 +91,7 @@ Module Module1
                         End If
 
 
-                        Console.Write("Segundo nombre del empleado (Si no posee digite 0): ")
+                        Console.Write("Segundo nombre del empleado (si no posee digite 0): ")
                         nom2 = Console.ReadLine()
                         If (salir(nom2) = False) Then
                             met.borrarDatos(emp, nom, ced, ape, nom2, ape2, dire, sueldo1, tipo)
@@ -164,20 +178,34 @@ Module Module1
                             Exit Select
                         End If
 
+                        Console.Write(vbNewLine)
+                        Console.ForegroundColor = ConsoleColor.Red
+                        Console.CursorVisible = False
+                        Console.Write("Datos ingresados correctamente")
+                        Console.ForegroundColor = ConsoleColor.White
+                        Threading.Thread.Sleep(1500)
+                        Console.CursorVisible = True
 
                     Catch ex As Exception
                         Console.Write(vbNewLine)
-                    Console.ForegroundColor = ConsoleColor.Red
-                    Console.Write("Ocurrió un error inesperado")
-                    Console.ForegroundColor = ConsoleColor.White
-                    Threading.Thread.Sleep(1500)
-                    Exit Do
+                        Console.ForegroundColor = ConsoleColor.Red
+                        Console.CursorVisible = False
+                        Console.Write("Ocurrió un error inesperado")
+                        Console.ForegroundColor = ConsoleColor.White
+                        Threading.Thread.Sleep(1500)
+                        Console.CursorVisible = True
+                        Exit Do
                     End Try
 
                 Case 2
-                    Console.Clear()
-                    Dim mostrarTipo As String = ""
 
+                    Console.Clear()
+                    Console.ForegroundColor = ConsoleColor.Cyan
+                    Console.Write("-------------------------------------------------EMPLEADOS REGISTRADOS-------------------------------------------------")
+                    Console.ForegroundColor = ConsoleColor.White
+                    Console.WriteLine(vbNewLine)
+
+                    Dim mostrarTipo As String = ""
                     For i As Integer = 0 To emp._cedula.Count - 1
 
                         If (emp._tipoEmpleado.Item(i) = 1) Then
@@ -189,25 +217,22 @@ Module Module1
                         End If
 
                         Console.WriteLine("Cédula: " + emp._cedula.Item(i))
-                        Console.WriteLine("Nombre: " + emp._nombre.Item(i))
-
+                        Console.Write("Nombres: " + emp._nombre.Item(i) + " ")
 
                         If (emp._SegundoNombre.Item(i) = "no") Then
-
+                            Console.Write(vbNewLine)
                         Else
-                            Console.WriteLine("Segundo Nombre: " + emp._SegundoNombre.Item(i))
+                            Console.WriteLine(emp._SegundoNombre.Item(i))
                         End If
 
-
-                        Console.WriteLine("Apellido: " + emp._apellido.Item(i))
-                        Console.WriteLine("Segundo Apellido: " + emp._SegundoApellido.Item(i))
+                        Console.Write("Apellidos: " + emp._apellido.Item(i) + " ")
+                        Console.WriteLine(emp._SegundoApellido.Item(i))
                         Console.WriteLine("Dirección: " + emp._direccion.Item(i))
                         Console.Write("Teléfonos: ")
 
                         For j As Integer = 0 To emp._tel.GetLength(0) - 1
                             If (emp._tel.GetValue(j, 0) = emp._cedula.Item(i)) Then
-                                Console.Write(emp._tel.GetValue(j, 1))
-                                ''Console.Write(" - ")
+                                Console.Write(emp._tel.GetValue(j, 1) & "  ")
                             End If
                         Next
                         Console.Write(vbNewLine)
@@ -216,25 +241,29 @@ Module Module1
                         Console.WriteLine("Sueldo neto: " + "$" & emp._sueldoTotal.Item(i))
 
                         If (emp._cedula.Count > 1) Then
-                            Console.WriteLine("--------------------------------------------------------------------------------------------- ")
+                            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------")
                         End If
                     Next
 
                     If (emp._cedula.Count <> 0) Then
                         Console.WriteLine("")
                         Console.WriteLine("")
-                        Console.WriteLine("El monto total a pagarle a todos los funcionarios es: " + "$" & cal.MontoTotal(emp))
+                        Console.Write("El monto total a pagarle a todos los funcionarios es: ")
+                        Console.ForegroundColor = ConsoleColor.Blue
+                        Console.WriteLine("$" & cal.MontoTotal(emp))
+                        Console.ForegroundColor = ConsoleColor.White
                         Console.WriteLine("")
                     Else
-
                         Console.Write("No hay datos para mostrar")
                         Console.WriteLine("")
                     End If
                     Console.WriteLine("")
                     Console.ForegroundColor = ConsoleColor.Red
+                    Console.CursorVisible = False
                     Console.Write("Pulse cualquier tecla para volver")
                     Console.ForegroundColor = ConsoleColor.White
                     Console.ReadLine()
+                    Console.CursorVisible = True
 
                 Case 3
                     Exit Do
@@ -242,9 +271,11 @@ Module Module1
                 Case Else
                     Console.ForegroundColor = ConsoleColor.Red
                     Console.Write(vbNewLine)
+                    Console.CursorVisible = False
                     Console.Write("Ingresó una opción incorrecta")
                     Console.ForegroundColor = ConsoleColor.White
                     Threading.Thread.Sleep(2000)
+                    Console.CursorVisible = True
 
             End Select
 

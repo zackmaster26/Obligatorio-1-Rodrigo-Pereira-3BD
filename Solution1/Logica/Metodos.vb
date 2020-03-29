@@ -9,9 +9,11 @@
                     repCed = True
                     Console.WriteLine("")
                     Console.ForegroundColor = ConsoleColor.Red
-                    Console.Write("Esta cédula ya fue ingresada (pulse cualquier tecla para volver al menú)")
+                    Console.CursorVisible = False
+                    Console.Write("Esta cédula ya fue ingresada (pulse cualquier tecla para volver al menú")
                     Console.ForegroundColor = ConsoleColor.White
                     Console.ReadLine()
+                    Console.CursorVisible = True
                     Return False
                 End If
             Next
@@ -23,8 +25,10 @@
             Console.WriteLine("")
             Console.ForegroundColor = ConsoleColor.Red
             Console.Write("Debe ingresar una cédula válida (pulse cualquier tecla)")
+            Console.CursorVisible = False
             Console.ForegroundColor = ConsoleColor.White
             Console.ReadLine()
+            Console.CursorVisible = True
             Return False
         End If
         Return False
@@ -46,9 +50,11 @@
                 If nom2.IndexOfAny(numeros.ToArray) > -1 Then
                     Console.WriteLine("")
                     Console.ForegroundColor = ConsoleColor.Red
+                    Console.CursorVisible = False
                     Console.Write("No debe contener caracteres numéricos (pulse cualquier tecla para volver al menú)")
                     Console.ForegroundColor = ConsoleColor.White
                     Console.ReadLine()
+                    Console.CursorVisible = True
                     Return False
                 Else
                     emp._nombre.Add(nom2.ToUpper)
@@ -80,9 +86,11 @@
                 If ape2.IndexOfAny(numeros.ToArray) > -1 Then
                     Console.WriteLine("")
                     Console.ForegroundColor = ConsoleColor.Red
+                    Console.CursorVisible = False
                     Console.Write("No debe contener caracteres numéricos (pulse cualquier tecla para volver al menú)")
                     Console.ForegroundColor = ConsoleColor.White
                     Console.ReadLine()
+                    Console.CursorVisible = True
                     Return False
                 Else
                     emp._apellido.Add(ape2.ToUpper)
@@ -109,14 +117,16 @@
             Console.ForegroundColor = ConsoleColor.White
             opcion = Console.ReadLine()
             If (opcion = "s") Then
-                Console.Write("Nombre del empleado: ")
+                Console.Write("Segundo nombre del empleado (si no posee digite 0): ")
                 Dim nom2 As String = Console.ReadLine()
                 If nom2.IndexOfAny(numeros.ToArray) > -1 Then
                     Console.WriteLine("")
                     Console.ForegroundColor = ConsoleColor.Red
+                    Console.CursorVisible = False
                     Console.Write("No debe contener caracteres numéricos (pulse cualquier tecla para volver al menú)")
                     Console.ForegroundColor = ConsoleColor.White
                     Console.ReadLine()
+                    Console.CursorVisible = True
                     Return False
                 Else
                     emp._SegundoNombre.Add(nom2.ToUpper)
@@ -148,9 +158,11 @@
                 If ape2.IndexOfAny(numeros.ToArray) > -1 Then
                     Console.WriteLine("")
                     Console.ForegroundColor = ConsoleColor.Red
+                    Console.CursorVisible = False
                     Console.Write("No debe contener caracteres numéricos (pulse cualquier tecla para volver al menú)")
                     Console.ForegroundColor = ConsoleColor.White
                     Console.ReadLine()
+                    Console.CursorVisible = True
                     Return False
                 Else
                     emp._SegundoApellido.Add(ape2.ToUpper)
@@ -191,9 +203,11 @@
                 Else
                     Console.WriteLine("")
                     Console.ForegroundColor = ConsoleColor.Red
+                    Console.CursorVisible = False
                     Console.Write("Error al ingresar el dato (pulse cualquier tecla para volver al menú)")
                     Console.ForegroundColor = ConsoleColor.White
                     Console.ReadLine()
+                    Console.CursorVisible = True
                     Return False
                 End If
             ElseIf (opcion = "n") Then
@@ -229,9 +243,11 @@
                 Else
                     Console.WriteLine("")
                     Console.ForegroundColor = ConsoleColor.Red
+                    Console.CursorVisible = False
                     Console.Write("Error al ingresar el dato (pulse cualquier tecla para volver al menú)")
                     Console.ForegroundColor = ConsoleColor.White
                     Console.ReadLine()
+                    Console.CursorVisible = True
                     Return False
                 End If
             ElseIf (opcion = "n") Then
