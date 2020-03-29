@@ -29,7 +29,7 @@
     Public Function MontoIndividual(emp As Empleado)
 
         Dim diferencia As Double
-        Dim sueldo As Double
+        Dim sueldo As Integer
         Dim total As Double
 
         For i As Integer = 0 To emp._sueldo.Count - 1
@@ -51,6 +51,7 @@
         Next
 
         emp._sueldoTotal.Add(sueldo)
+
         Return sueldo
     End Function
 

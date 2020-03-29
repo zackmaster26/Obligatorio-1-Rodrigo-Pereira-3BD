@@ -8,7 +8,9 @@
                 If (emp._cedula.Item(i) = ced) Then
                     repCed = True
                     Console.WriteLine("")
+                    Console.ForegroundColor = ConsoleColor.Red
                     Console.Write("Esta cédula ya fue ingresada (pulse cualquier tecla para volver al menú)")
+                    Console.ForegroundColor = ConsoleColor.White
                     Console.ReadLine()
                     Return False
                 End If
@@ -19,7 +21,9 @@
             End If
         Else
             Console.WriteLine("")
+            Console.ForegroundColor = ConsoleColor.Red
             Console.Write("Debe ingresar una cédula válida (pulse cualquier tecla)")
+            Console.ForegroundColor = ConsoleColor.White
             Console.ReadLine()
             Return False
         End If
@@ -32,14 +36,18 @@
         Const numeros = "0123456789"
 
         If nom.IndexOfAny(numeros.ToArray) > -1 Then
+            Console.ForegroundColor = ConsoleColor.Red
             Console.Write("Ha habido un error al ingresar los datos. ¿Desea repetir? (s/n): ")
+            Console.ForegroundColor = ConsoleColor.White
             opcion = Console.ReadLine()
             If (opcion = "s") Then
                 Console.Write("Nombre del empleado: ")
                 Dim nom2 As String = Console.ReadLine()
                 If nom2.IndexOfAny(numeros.ToArray) > -1 Then
                     Console.WriteLine("")
+                    Console.ForegroundColor = ConsoleColor.Red
                     Console.Write("No debe contener caracteres numéricos (pulse cualquier tecla para volver al menú)")
+                    Console.ForegroundColor = ConsoleColor.White
                     Console.ReadLine()
                     Return False
                 Else
@@ -57,6 +65,108 @@
 
     End Function
 
+    Public Function verificarApellido(ape As String, emp As Empleado) As Boolean
+        Dim opcion As String
+        Const numeros = "0123456789"
+
+        If ape.IndexOfAny(numeros.ToArray) > -1 Then
+            Console.ForegroundColor = ConsoleColor.Red
+            Console.Write("Ha habido un error al ingresar los datos. ¿Desea repetir? (s/n): ")
+            Console.ForegroundColor = ConsoleColor.White
+            opcion = Console.ReadLine()
+            If (opcion = "s") Then
+                Console.Write("Apellido del empleado: ")
+                Dim ape2 As String = Console.ReadLine()
+                If ape2.IndexOfAny(numeros.ToArray) > -1 Then
+                    Console.WriteLine("")
+                    Console.ForegroundColor = ConsoleColor.Red
+                    Console.Write("No debe contener caracteres numéricos (pulse cualquier tecla para volver al menú)")
+                    Console.ForegroundColor = ConsoleColor.White
+                    Console.ReadLine()
+                    Return False
+                Else
+                    emp._apellido.Add(ape2.ToUpper)
+                    Return True
+                End If
+            ElseIf (opcion = "n") Then
+                Return False
+            End If
+        Else
+            emp._apellido.Add(ape.ToUpper)
+            Return True
+        End If
+        Return False
+
+    End Function
+
+    Public Function verificarSegNombre(nom As String, emp As Empleado) As Boolean
+        Dim opcion As String
+        Const numeros = "0123456789"
+
+        If nom.IndexOfAny(numeros.ToArray) > -1 Then
+            Console.ForegroundColor = ConsoleColor.Red
+            Console.Write("Ha habido un error al ingresar los datos. ¿Desea repetir? (s/n): ")
+            Console.ForegroundColor = ConsoleColor.White
+            opcion = Console.ReadLine()
+            If (opcion = "s") Then
+                Console.Write("Nombre del empleado: ")
+                Dim nom2 As String = Console.ReadLine()
+                If nom2.IndexOfAny(numeros.ToArray) > -1 Then
+                    Console.WriteLine("")
+                    Console.ForegroundColor = ConsoleColor.Red
+                    Console.Write("No debe contener caracteres numéricos (pulse cualquier tecla para volver al menú)")
+                    Console.ForegroundColor = ConsoleColor.White
+                    Console.ReadLine()
+                    Return False
+                Else
+                    emp._SegundoNombre.Add(nom2.ToUpper)
+                    Return True
+                End If
+            ElseIf (opcion = "n") Then
+                Return False
+            End If
+        Else
+            emp._SegundoNombre.Add(nom.ToUpper)
+            Return True
+        End If
+        Return False
+
+    End Function
+
+    Public Function verificarSegApellido(ape As String, emp As Empleado) As Boolean
+        Dim opcion As String
+        Const numeros = "0123456789"
+
+        If ape.IndexOfAny(numeros.ToArray) > -1 Then
+            Console.ForegroundColor = ConsoleColor.Red
+            Console.Write("Ha habido un error al ingresar los datos. ¿Desea repetir? (s/n): ")
+            Console.ForegroundColor = ConsoleColor.White
+            opcion = Console.ReadLine()
+            If (opcion = "s") Then
+                Console.Write("Apellido del empleado: ")
+                Dim ape2 As String = Console.ReadLine()
+                If ape2.IndexOfAny(numeros.ToArray) > -1 Then
+                    Console.WriteLine("")
+                    Console.ForegroundColor = ConsoleColor.Red
+                    Console.Write("No debe contener caracteres numéricos (pulse cualquier tecla para volver al menú)")
+                    Console.ForegroundColor = ConsoleColor.White
+                    Console.ReadLine()
+                    Return False
+                Else
+                    emp._SegundoApellido.Add(ape2.ToUpper)
+                    Return True
+                End If
+            ElseIf (opcion = "n") Then
+                Return False
+            End If
+        Else
+            emp._SegundoApellido.Add(ape.ToUpper)
+            Return True
+        End If
+        Return False
+
+    End Function
+
     Public Function verificarSueldo(sueldo1 As String, emp As Empleado) As Boolean
         Dim opcion As String
         Dim sueldo As Double
@@ -67,7 +177,9 @@
             emp._sueldo.Add(sueldo)
             Return True
         Else
+            Console.ForegroundColor = ConsoleColor.Red
             Console.Write("Error al ingresar los datos. ¿Desea repetir? (s/n): ")
+            Console.ForegroundColor = ConsoleColor.White
             opcion = Console.ReadLine
             If (opcion = "s") Then
                 Console.Write("Sueldo base del empleado: ")
@@ -78,7 +190,9 @@
                     Return True
                 Else
                     Console.WriteLine("")
+                    Console.ForegroundColor = ConsoleColor.Red
                     Console.Write("Error al ingresar el dato (pulse cualquier tecla para volver al menú)")
+                    Console.ForegroundColor = ConsoleColor.White
                     Console.ReadLine()
                     Return False
                 End If
@@ -100,7 +214,9 @@
             cal.MontoIndividual(emp)
             Return True
         Else
+            Console.ForegroundColor = ConsoleColor.Red
             Console.Write("Error al ingresar los datos. ¿Desea repetir? (s/n): ")
+            Console.ForegroundColor = ConsoleColor.White
             opcion = Console.ReadLine
             If (opcion = "s") Then
                 Console.Write("Tipo de empleado(1.Gerente 2.Operario 3.Administrativo): ")
@@ -112,47 +228,22 @@
                     Return True
                 Else
                     Console.WriteLine("")
+                    Console.ForegroundColor = ConsoleColor.Red
                     Console.Write("Error al ingresar el dato (pulse cualquier tecla para volver al menú)")
+                    Console.ForegroundColor = ConsoleColor.White
                     Console.ReadLine()
                     Return False
                 End If
             ElseIf (opcion = "n") Then
                 Return False
             End If
-        End If
-    End Function
-
-    Public Function verificarApellido(ape As String, emp As Empleado) As Boolean
-        Dim opcion As String
-        Const numeros = "0123456789"
-
-        If ape.IndexOfAny(numeros.ToArray) > -1 Then
-            Console.Write("Ha habido un error al ingresar los datos. ¿Desea repetir? (s/n): ")
-            opcion = Console.ReadLine()
-            If (opcion = "s") Then
-                Console.Write("Apellido del empleado: ")
-                Dim ape2 As String = Console.ReadLine()
-                If ape2.IndexOfAny(numeros.ToArray) > -1 Then
-                    Console.WriteLine("")
-                    Console.Write("No debe contener caracteres numéricos (pulse cualquier tecla para volver al menú)")
-                    Console.ReadLine()
-                    Return False
-                Else
-                    emp._apellido.Add(ape2.ToUpper)
-                    Return True
-                End If
-            ElseIf (opcion = "n") Then
-                Return False
-            End If
-        Else
-            emp._apellido.Add(ape.ToUpper)
-            Return True
         End If
         Return False
-
     End Function
 
-    Public Function borrarDatos(emp As Empleado, nom As String, ced As String, ape As String, dire As String, sueldo As String, tipo As String) As Boolean
+
+
+    Public Function borrarDatos(emp As Empleado, nom As String, ced As String, ape As String, segNom As String, segApe As String, dire As String, sueldo As String, tipo As String) As Boolean
 
         For i As Integer = 0 To emp._cedula.Count - 1
             If (emp._cedula.Item(i) = ced) Then
@@ -168,6 +259,7 @@
                 Return False
             End If
         Next
+
         For i As Integer = 0 To emp._apellido.Count - 1
             If (emp._apellido.Item(i) = ape.ToUpper) Then
                 emp._apellido.RemoveAt(i)
@@ -175,6 +267,25 @@
                 Return False
             End If
         Next
+
+        For i As Integer = 0 To emp._SegundoNombre.Count - 1
+            If (emp._SegundoNombre.Item(i) <> Nothing) Then
+                If (emp._SegundoNombre(i) = segNom.ToUpper) Then
+                    emp._SegundoNombre.RemoveAt(i)
+                Else
+                    Return False
+                End If
+            End If
+        Next
+
+        For i As Integer = 0 To emp._SegundoApellido.Count - 1
+            If (emp._SegundoApellido.Item(i) = segApe.ToUpper) Then
+                emp._SegundoApellido.RemoveAt(i)
+            Else
+                Return False
+            End If
+        Next
+
         For i As Integer = 0 To emp._direccion.Count - 1
             If (emp._direccion.Item(i) = dire.ToUpper) Then
                 emp._direccion.RemoveAt(i)
@@ -183,10 +294,10 @@
             End If
         Next
 
-        For i As Integer = 0 To emp.tel.GetLength(0) - 1
-            If (emp.tel.GetValue(i, 0) = ced) Then
-                emp.tel.SetValue(Nothing, i, 1)
-                emp.tel.SetValue(Nothing, i, 0)
+        For i As Integer = 0 To emp._tel.GetLength(0) - 1
+            If (emp._tel.GetValue(i, 0) = ced) Then
+                emp._tel.SetValue(Nothing, i, 1)
+                emp._tel.SetValue(Nothing, i, 0)
             Else
                 Return False
             End If
@@ -199,6 +310,7 @@
                 Return False
             End If
         Next
+
         For i As Integer = 0 To emp._tipoEmpleado.Count - 1
             If (emp._tipoEmpleado.Item(i) = tipo) Then
                 emp._tipoEmpleado.RemoveAt(i)
@@ -207,6 +319,9 @@
             End If
         Next
         Return True
+
     End Function
+
+
 
 End Class
