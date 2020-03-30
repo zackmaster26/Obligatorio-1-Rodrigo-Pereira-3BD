@@ -11,7 +11,6 @@
     Private tipoEmpleado As New ArrayList
     Private sueldoTotal As New ArrayList
 
-
     Public Property _cedula As ArrayList
         Get
             Return cedula

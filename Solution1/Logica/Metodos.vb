@@ -1,5 +1,31 @@
 ﻿Public Class Metodos
 
+    Public Function salir(op As String) As Boolean
+        If (op = "!") Then
+            Console.Write(vbNewLine)
+            Console.ForegroundColor = ConsoleColor.Red
+            Console.CursorVisible = False
+            Console.Write("Se borraron los datos ingresados")
+            Console.ForegroundColor = ConsoleColor.White
+            Threading.Thread.Sleep(2500)
+            Console.CursorVisible = True
+            Return False
+        End If
+        Return True
+    End Function
+
+    Public Function sinDatos(op As String)
+        If (op = "") Then
+            Console.WriteLine("")
+            Console.ForegroundColor = ConsoleColor.Red
+            Console.CursorVisible = False
+            Console.Write("No ingresó ningún dato")
+            Console.ForegroundColor = ConsoleColor.White
+            Threading.Thread.Sleep(1500)
+            Return False
+        End If
+        Return True
+    End Function
 
     Public Function verificarCedula(ced As String, emp As Empleado, repCed As Boolean) As Boolean
 
@@ -32,7 +58,6 @@
             Return False
         End If
         Return False
-
     End Function
 
     Public Function verificarNombre(nom As String, emp As Empleado) As Boolean
@@ -46,7 +71,10 @@
             opcion = Console.ReadLine()
             If (opcion = "s") Then
                 Console.Write("Nombre del empleado: ")
-                Dim nom2 As String = Console.ReadLine()
+                Dim nom2 As String = Console.ReadLine
+                If (salir(nom2) = False) Then
+                    Return False
+                End If
                 If nom2.IndexOfAny(numeros.ToArray) > -1 Then
                     Console.WriteLine("")
                     Console.ForegroundColor = ConsoleColor.Red
@@ -68,7 +96,6 @@
             Return True
         End If
         Return False
-
     End Function
 
     Public Function verificarApellido(ape As String, emp As Empleado) As Boolean
@@ -104,7 +131,6 @@
             Return True
         End If
         Return False
-
     End Function
 
     Public Function verificarSegNombre(nom As String, emp As Empleado) As Boolean
@@ -140,7 +166,6 @@
             Return True
         End If
         Return False
-
     End Function
 
     Public Function verificarSegApellido(ape As String, emp As Empleado) As Boolean
@@ -176,7 +201,6 @@
             Return True
         End If
         Return False
-
     End Function
 
     Public Function verificarSueldo(sueldo1 As String, emp As Empleado) As Boolean
@@ -257,87 +281,45 @@
         Return False
     End Function
 
-
-
     Public Function borrarDatos(emp As Empleado, nom As String, ced As String, ape As String, segNom As String, segApe As String, dire As String, sueldo As String, tipo As String) As Boolean
 
         For i As Integer = 0 To emp._cedula.Count - 1
-            If (emp._cedula.Item(i) = ced) Then
-                emp._cedula.RemoveAt(i)
-            Else
-                Return False
-            End If
-        Next
-        For i As Integer = 0 To emp._nombre.Count - 1
-            If (emp._nombre.Item(i) = nom.ToUpper) Then
-                emp._nombre.RemoveAt(i)
-            Else
-                Return False
-            End If
-        Next
 
-        For i As Integer = 0 To emp._apellido.Count - 1
-            If (emp._apellido.Item(i) = ape.ToUpper) Then
-                emp._apellido.RemoveAt(i)
-            Else
-                Return False
-            End If
-        Next
+            If (emp._cedula.Count <> 0 Or emp._nombre.Count <> 0 Or emp._apellido.Count <> 0 Or emp._SegundoNombre.Count <> 0 Or emp._SegundoApellido.Count <> 0 Or emp._direccion.Count <> 0 Or emp._direccion.Count <> 0 Or emp._sueldo.Count <> 0 Or emp._tipoEmpleado.Count <> 0) Then
 
-        For i As Integer = 0 To emp._SegundoNombre.Count - 1
-            If (emp._SegundoNombre.Item(i) <> Nothing) Then
-                If (emp._SegundoNombre(i) = segNom.ToUpper) Then
-                    emp._SegundoNombre.RemoveAt(i)
-                Else
-                    Return False
+                If (emp._cedula.Item(i) = emp._cedula.Item(emp._cedula.Count - 1)) Then
+                    emp._cedula.RemoveAt(i)
+                    If (nom <> "!" And nom <> Nothing) Then
+                        emp._nombre.RemoveAt(i)
+                    End If
+                    If (ape <> "!" And ape <> Nothing) Then
+                        emp._apellido.RemoveAt(i)
+                    End If
+                    If (segNom <> "!" And segNom <> Nothing) Then
+                        emp._SegundoNombre.RemoveAt(i)
+                    End If
+                    If (segApe <> "!" And segApe <> Nothing) Then
+                        emp._SegundoApellido.RemoveAt(i)
+                    End If
+                    For k As Integer = 0 To emp._tel.GetLength(0) - 1
+                        If (emp._tel.GetValue(k, 0) = ced) Then
+                            emp._tel.SetValue(Nothing, k, 1)
+                            emp._tel.SetValue(Nothing, k, 0)
+                        End If
+                    Next
+                    If (dire <> "!" And dire <> Nothing) Then
+                        emp._direccion.RemoveAt(i)
+                    End If
+                    If (sueldo <> "!" And sueldo <> Nothing) Then
+                        emp._sueldo.RemoveAt(i)
+                    End If
+                    If (tipo <> "!" And tipo <> Nothing) Then
+                        emp._tipoEmpleado.RemoveAt(i)
+                    End If
                 End If
             End If
         Next
-
-        For i As Integer = 0 To emp._SegundoApellido.Count - 1
-            If (emp._SegundoApellido.Item(i) = segApe.ToUpper) Then
-                emp._SegundoApellido.RemoveAt(i)
-            Else
-                Return False
-            End If
-        Next
-
-        For i As Integer = 0 To emp._direccion.Count - 1
-            If (emp._direccion.Item(i) = dire.ToUpper) Then
-                emp._direccion.RemoveAt(i)
-            Else
-                Return False
-            End If
-        Next
-
-        For i As Integer = 0 To emp._tel.GetLength(0) - 1
-            If (emp._tel.GetValue(i, 0) = ced) Then
-                emp._tel.SetValue(Nothing, i, 1)
-                emp._tel.SetValue(Nothing, i, 0)
-            Else
-                Return False
-            End If
-        Next
-
-        For i As Integer = 0 To emp._sueldo.Count - 1
-            If (emp._sueldo.Item(i) = sueldo) Then
-                emp._sueldo.RemoveAt(i)
-            Else
-                Return False
-            End If
-        Next
-
-        For i As Integer = 0 To emp._tipoEmpleado.Count - 1
-            If (emp._tipoEmpleado.Item(i) = tipo) Then
-                emp._tipoEmpleado.RemoveAt(i)
-            Else
-                Return False
-            End If
-        Next
         Return True
-
     End Function
-
-
 
 End Class

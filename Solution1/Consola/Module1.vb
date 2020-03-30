@@ -5,32 +5,37 @@ Module Module1
     Private emp As New Empleado
     Private cal As New Calculo
     Private met As New Metodos
+
     Private op As Byte
+
     Private ced As Integer
+    Private ced1 As String
     Private repCed As Boolean = False
     Private nom As String
     Private nom2 As String
     Private ape As String
     Private ape2 As String
     Private tel As Double
+    Private tel1 As String
     Private sueldo1 As String
     Private tipo As String
     Private dire As String
     Private contador As Integer = 0
 
-    Private Function salir(op As String) As Boolean
-        If (op = "!") Then
-            Console.Write(vbNewLine)
-            Console.ForegroundColor = ConsoleColor.Red
-            Console.CursorVisible = False
-            Console.Write("Se borraron los datos ingresados")
-            Console.ForegroundColor = ConsoleColor.White
-            Threading.Thread.Sleep(2500)
-            Console.CursorVisible = True
-            Return False
-        End If
-        Return True
-    End Function
+    Private Sub vaciar()
+        ced = Nothing
+        ced1 = Nothing
+        repCed = Nothing
+        nom = Nothing
+        nom2 = Nothing
+        ape = Nothing
+        ape2 = Nothing
+        tel = Nothing
+        tel1 = Nothing
+        sueldo1 = Nothing
+        tipo = Nothing
+        dire = Nothing
+    End Sub
 
     Sub Main()
 
@@ -47,6 +52,7 @@ Module Module1
             Console.WriteLine("1) Registro de Empleados")
             Console.WriteLine("2) Importe total a pagar por concepto de sueldo")
             Console.WriteLine("3) Salir")
+            Console.Write(vbNewLine)
             Console.Write("Opción: ")
             Try
                 op = Integer.Parse(Console.ReadLine())
@@ -67,66 +73,107 @@ Module Module1
                     Console.WriteLine(vbNewLine)
 
                     Try
+
                         Console.Write("Cédula del empleado: ")
-                        Dim ced1 As String = Console.ReadLine()
-                        If (salir(ced1) = False) Then
-                            met.borrarDatos(emp, nom, ced, ape, nom2, ape2, dire, sueldo1, tipo)
+                        ced1 = Console.ReadLine()
+                        If (met.sinDatos(ced1) = False) Then
+                            met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                            vaciar()
                             Exit Select
-                        End If
-                        ced = ced1
-                        If met.verificarCedula(ced, emp, repCed) = False Then
-                            Exit Select
+                        Else
+                            If (met.salir(ced1) = False) Then
+                                vaciar()
+                                Exit Select
+                            End If
+                            ced = ced1
+                            If met.verificarCedula(ced1, emp, repCed) = False Then
+                                vaciar()
+                                Exit Select
+                            End If
                         End If
 
 
                         Console.Write("Nombre del empleado: ")
                         nom = Console.ReadLine()
-                        If (salir(nom) = False) Then
-                            met.borrarDatos(emp, nom, ced, ape, nom2, ape2, dire, sueldo1, tipo)
+                        If (met.sinDatos(nom) = False) Then
+                            met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                            vaciar()
                             Exit Select
-                        End If
-                        If (met.verificarNombre(nom, emp) = False) Then
-                            met.borrarDatos(emp, nom, ced, ape, nom2, ape2, dire, sueldo1, tipo)
-                            Exit Select
+                        Else
+                            If (met.salir(nom) = False) Then
+                                met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                                vaciar()
+                                Exit Select
+                            End If
+                            If (met.verificarNombre(nom, emp) = False) Then
+                                met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                                vaciar()
+                                Exit Select
+                            End If
                         End If
 
 
                         Console.Write("Segundo nombre del empleado (si no posee digite 0): ")
                         nom2 = Console.ReadLine()
-                        If (salir(nom2) = False) Then
-                            met.borrarDatos(emp, nom, ced, ape, nom2, ape2, dire, sueldo1, tipo)
+                        If (met.sinDatos(nom2) = False) Then
+                            met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                            vaciar()
                             Exit Select
-                        End If
-                        If (nom2 <> "0") Then
-                            If (met.verificarSegNombre(nom2, emp) = False) Then
-                                met.borrarDatos(emp, nom, ced, ape, nom2, ape2, dire, sueldo1, tipo)
+                        Else
+                            If (met.salir(nom2) = False) Then
+                                met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                                vaciar()
                                 Exit Select
                             End If
-                        Else
-                            emp._SegundoNombre.Add("no")
+                            If (nom2 <> "0") Then
+                                If (met.verificarSegNombre(nom2, emp) = False) Then
+                                    met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                                    vaciar()
+                                    Exit Select
+                                End If
+                            Else
+                                emp._SegundoNombre.Add("no")
+                            End If
                         End If
 
 
                         Console.Write("Apellido del empleado: ")
                         ape = Console.ReadLine()
-                        If (salir(ape) = False) Then
-                            met.borrarDatos(emp, nom, ced, ape, nom2, ape2, dire, sueldo1, tipo)
+                        If (met.sinDatos(ape) = False) Then
+                            met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                            vaciar()
                             Exit Select
-                        End If
-                        If (met.verificarApellido(ape, emp) = False) Then
-                            met.borrarDatos(emp, nom, ced, ape, nom2, ape2, dire, sueldo1, tipo)
+                        Else
+                            If (met.salir(ape) = False) Then
+                                met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                                vaciar()
+                                Exit Select
+                            End If
+                            If (met.verificarApellido(ape, emp) = False) Then
+                                met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                                vaciar()
+                                Exit Select
+                            End If
                         End If
 
 
                         Console.Write("Segundo apellido del empleado: ")
                         ape2 = Console.ReadLine()
-                        If (salir(ape2) = False) Then
-                            met.borrarDatos(emp, nom, ced, ape, nom2, ape2, dire, sueldo1, tipo)
+                        If (met.sinDatos(ape2) = False) Then
+                            met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                            vaciar()
                             Exit Select
-                        End If
-                        If (met.verificarSegApellido(ape2, emp) = False) Then
-                            met.borrarDatos(emp, nom, ced, ape, nom2, ape2, dire, sueldo1, tipo)
-                            Exit Select
+                        Else
+                            If (met.salir(ape2) = False) Then
+                                met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                                vaciar()
+                                Exit Select
+                            End If
+                            If (met.verificarSegApellido(ape2, emp) = False) Then
+                                met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                                vaciar()
+                                Exit Select
+                            End If
                         End If
 
 
@@ -134,49 +181,88 @@ Module Module1
                         Dim ing As Byte = Byte.Parse(Console.ReadLine)
                         For i As Integer = 0 To ing - 1
                             Console.Write("Teléfono " & i + 1 & ": ")
-                            Dim tel1 As String = Console.ReadLine
-                            If (salir(tel1) = False) Then
-                                met.borrarDatos(emp, nom, ced, ape, nom2, ape2, dire, sueldo1, tipo)
+                            tel1 = Console.ReadLine
+                            If (met.salir(tel1) = False) Then
+                                met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                                vaciar()
                                 Exit Select
                             End If
-                            tel = tel1
-                            emp._tel(contador, 0) = ced
-                            emp._tel(contador, 1) = tel
-                            contador = contador + 1
+                            If IsNumeric(tel1) Then
+                                tel = tel1
+                                emp._tel(contador, 0) = ced
+                                emp._tel(contador, 1) = tel
+                                contador = contador + 1
+                            Else
+                                Console.WriteLine("")
+                                Console.ForegroundColor = ConsoleColor.Red
+                                Console.CursorVisible = False
+                                Console.Write("Error al ingresar el dato (pulse cualquier tecla para volver al menú)")
+                                Console.ForegroundColor = ConsoleColor.White
+                                Console.ReadLine()
+                                Console.CursorVisible = True
+                                met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                                vaciar()
+                                Exit Select
+                            End If
+
                         Next
 
 
                         Console.Write("Dirección del empleado: ")
                         dire = Console.ReadLine
-                        If (salir(dire) = False) Then
-                            met.borrarDatos(emp, nom, ced, ape, nom2, ape2, dire, sueldo1, tipo)
+                        If met.sinDatos(dire) = False Then
+                            met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                            vaciar()
                             Exit Select
+                        Else
+                            If (met.salir(dire) = False) Then
+                                met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                                vaciar()
+                                Exit Select
+                            End If
+                            emp._direccion.Add(dire.ToUpper)
                         End If
-                        emp._direccion.Add(dire.ToUpper)
 
 
                         Console.Write("Sueldo base del empleado: ")
                         sueldo1 = Console.ReadLine()
-                        If (salir(sueldo1) = False) Then
-                            met.borrarDatos(emp, nom, ced, ape, nom2, ape2, dire, sueldo1, tipo)
+                        If (met.sinDatos(sueldo1) = False) Then
+                            met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                            vaciar()
                             Exit Select
-                        End If
-                        If (met.verificarSueldo(sueldo1, emp) = False) Then
-                            met.borrarDatos(emp, nom, ced, ape, nom2, ape2, dire, sueldo1, tipo)
-                            Exit Select
+                        Else
+                            If (met.salir(sueldo1) = False) Then
+                                met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                                vaciar()
+                                Exit Select
+                            End If
+                            If (met.verificarSueldo(sueldo1, emp) = False) Then
+                                met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                                vaciar()
+                                Exit Select
+                            End If
                         End If
 
 
                         Console.Write("Tipo de empleado (1.Gerente 2.Operario 3.Administrativo): ")
                         tipo = Console.ReadLine
-                        If (salir(tipo) = False) Then
-                            met.borrarDatos(emp, nom, ced, ape, nom2, ape2, dire, sueldo1, tipo)
+                        If (met.sinDatos(tipo) = False) Then
+                            met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                            vaciar()
                             Exit Select
+                        Else
+                            If (met.salir(tipo) = False) Then
+                                met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                                vaciar()
+                                Exit Select
+                            End If
+                            If (met.verificarTipo(tipo, emp, cal) = False) Then
+                                met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
+                                vaciar()
+                                Exit Select
+                            End If
                         End If
-                        If (met.verificarTipo(tipo, emp, cal) = False) Then
-                            met.borrarDatos(emp, nom, ced, ape, nom2, ape2, dire, sueldo1, tipo)
-                            Exit Select
-                        End If
+
 
                         Console.Write(vbNewLine)
                         Console.ForegroundColor = ConsoleColor.Red
@@ -206,6 +292,7 @@ Module Module1
                     Console.WriteLine(vbNewLine)
 
                     Dim mostrarTipo As String = ""
+
                     For i As Integer = 0 To emp._cedula.Count - 1
 
                         If (emp._tipoEmpleado.Item(i) = 1) Then
@@ -214,7 +301,7 @@ Module Module1
                             mostrarTipo = "Operario"
                         ElseIf (emp._tipoEmpleado.Item(i) = 3) Then
                             mostrarTipo = "Administrativo"
-                        End If
+                            End If
 
                         Console.WriteLine("Cédula: " + emp._cedula.Item(i))
                         Console.Write("Nombres: " + emp._nombre.Item(i) + " ")
@@ -235,6 +322,7 @@ Module Module1
                                 Console.Write(emp._tel.GetValue(j, 1) & "  ")
                             End If
                         Next
+
                         Console.Write(vbNewLine)
                         Console.WriteLine("Cargo: " + mostrarTipo)
                         Console.WriteLine("Sueldo base: " + "$" & emp._sueldo.Item(i))
@@ -243,6 +331,7 @@ Module Module1
                         If (emp._cedula.Count > 1) Then
                             Console.WriteLine("------------------------------------------------------------------------------------------------------------------------")
                         End If
+
                     Next
 
                     If (emp._cedula.Count <> 0) Then
@@ -257,6 +346,7 @@ Module Module1
                         Console.Write("No hay datos para mostrar")
                         Console.WriteLine("")
                     End If
+
                     Console.WriteLine("")
                     Console.ForegroundColor = ConsoleColor.Red
                     Console.CursorVisible = False
@@ -266,9 +356,27 @@ Module Module1
                     Console.CursorVisible = True
 
                 Case 3
+
                     Exit Do
 
+                    'Case 4
+
+                    '    Console.Write("Cedula: ")
+                    '    Dim busCed As String = Console.ReadLine()
+
+                    '    For i As Integer = 0 To emp._cedula.Count - 1
+                    '        If (emp._cedula.Item(i) = busCed) Then
+                    '            Console.WriteLine("Nuevo nombre: ")
+                    '            Dim nuevoNombre As String = Console.ReadLine
+                    '            emp._nombre.Insert(i, nuevoNombre)
+                    '            emp._nombre.RemoveAt(emp._nombre.Count - 1)
+                    '        End If
+
+
+                    '    Next
+
                 Case Else
+
                     Console.ForegroundColor = ConsoleColor.Red
                     Console.Write(vbNewLine)
                     Console.CursorVisible = False
