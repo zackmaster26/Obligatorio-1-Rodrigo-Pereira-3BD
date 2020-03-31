@@ -20,7 +20,6 @@
                 sueldo = diferencia + emp._sueldo.Item(i)
                 total = sueldo + total
             End If
-
         Next
 
         Return total
@@ -47,7 +46,6 @@
                 diferencia = total * 0.27
                 sueldo = diferencia + total
             End If
-
         Next
 
         emp._sueldoTotal.Add(sueldo)

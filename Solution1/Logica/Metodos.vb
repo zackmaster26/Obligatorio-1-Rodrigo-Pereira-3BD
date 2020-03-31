@@ -7,7 +7,7 @@
             Console.CursorVisible = False
             Console.Write("Se borraron los datos ingresados")
             Console.ForegroundColor = ConsoleColor.White
-            Threading.Thread.Sleep(2500)
+            Threading.Thread.Sleep(1500)
             Console.CursorVisible = True
             Return False
         End If
@@ -70,7 +70,7 @@
             Console.ForegroundColor = ConsoleColor.White
             opcion = Console.ReadLine()
             If (opcion = "s") Then
-                Console.Write("Nombre del empleado: ")
+                Console.Write("Nombre: ")
                 Dim nom2 As String = Console.ReadLine
                 If (salir(nom2) = False) Then
                     Return False
@@ -108,7 +108,7 @@
             Console.ForegroundColor = ConsoleColor.White
             opcion = Console.ReadLine()
             If (opcion = "s") Then
-                Console.Write("Apellido del empleado: ")
+                Console.Write("Apellido: ")
                 Dim ape2 As String = Console.ReadLine()
                 If ape2.IndexOfAny(numeros.ToArray) > -1 Then
                     Console.WriteLine("")
@@ -143,7 +143,7 @@
             Console.ForegroundColor = ConsoleColor.White
             opcion = Console.ReadLine()
             If (opcion = "s") Then
-                Console.Write("Segundo nombre del empleado (si no posee digite 0): ")
+                Console.Write("Segundo nombre (si no posee digite 0): ")
                 Dim nom2 As String = Console.ReadLine()
                 If nom2.IndexOfAny(numeros.ToArray) > -1 Then
                     Console.WriteLine("")
@@ -178,7 +178,7 @@
             Console.ForegroundColor = ConsoleColor.White
             opcion = Console.ReadLine()
             If (opcion = "s") Then
-                Console.Write("Apellido del empleado: ")
+                Console.Write("Apellido: ")
                 Dim ape2 As String = Console.ReadLine()
                 If ape2.IndexOfAny(numeros.ToArray) > -1 Then
                     Console.WriteLine("")
@@ -218,7 +218,7 @@
             Console.ForegroundColor = ConsoleColor.White
             opcion = Console.ReadLine
             If (opcion = "s") Then
-                Console.Write("Sueldo base del empleado: ")
+                Console.Write("Sueldo base: ")
                 Dim sueldo2 As String = Console.ReadLine()
                 If IsNumeric(sueldo2) Then
                     sueldo3 = sueldo2
@@ -257,7 +257,7 @@
             Console.ForegroundColor = ConsoleColor.White
             opcion = Console.ReadLine
             If (opcion = "s") Then
-                Console.Write("Tipo de empleado(1.Gerente 2.Operario 3.Administrativo): ")
+                Console.Write("Cargo del empleado (1.Gerente 2.Operario 3.Administrativo): ")
                 Dim tipo2 As String = Console.ReadLine
                 If (tipo2 = "1" Or tipo2 = "2" Or tipo2 = "3") Then
                     tipo3 = tipo2
