@@ -27,6 +27,24 @@
         Return True
     End Function
 
+    Public Function modificar(o As String, contador As Integer, array As ArrayList) As Boolean
+        If IsNumeric(o) Then
+            Console.ForegroundColor = ConsoleColor.Red
+            Console.Write(vbNewLine)
+            Console.CursorVisible = False
+            Console.WriteLine("No debe contener números")
+            Console.ForegroundColor = ConsoleColor.White
+            Threading.Thread.Sleep(1500)
+            Console.CursorVisible = True
+            Return False
+        Else
+            array.Insert(contador, o.ToUpper)
+            array.RemoveAt(contador + 1)
+            Return True
+        End If
+        Return False
+    End Function
+
     Public Function verificarCedula(ced As String, emp As Empleado, repCed As Boolean) As Boolean
 
         If (ced.Length = 7 Or ced.Length = 8) Then
@@ -60,22 +78,22 @@
         Return False
     End Function
 
-    Public Function verificarNombre(nom As String, emp As Empleado) As Boolean
+    Public Function verificarString(string1 As String, array As ArrayList, texto As String) As Boolean
         Dim opcion As String
         Const numeros = "0123456789"
 
-        If nom.IndexOfAny(numeros.ToArray) > -1 Then
+        If string1.IndexOfAny(numeros.ToArray) > -1 Then
             Console.ForegroundColor = ConsoleColor.Red
             Console.Write("Ha habido un error al ingresar los datos. ¿Desea repetir? (s/n): ")
             Console.ForegroundColor = ConsoleColor.White
             opcion = Console.ReadLine()
             If (opcion = "s") Then
-                Console.Write("Nombre: ")
-                Dim nom2 As String = Console.ReadLine
-                If (salir(nom2) = False) Then
+                Console.Write(texto)
+                Dim string2 As String = Console.ReadLine
+                If (salir(string2) = False) Then
                     Return False
                 End If
-                If nom2.IndexOfAny(numeros.ToArray) > -1 Then
+                If string2.IndexOfAny(numeros.ToArray) > -1 Then
                     Console.WriteLine("")
                     Console.ForegroundColor = ConsoleColor.Red
                     Console.CursorVisible = False
@@ -85,119 +103,14 @@
                     Console.CursorVisible = True
                     Return False
                 Else
-                    emp._nombre.Add(nom2.ToUpper)
+                    array.Add(string2.ToUpper)
                     Return True
                 End If
             ElseIf (opcion = "n") Then
                 Return False
             End If
         Else
-            emp._nombre.Add(nom.ToUpper)
-            Return True
-        End If
-        Return False
-    End Function
-
-    Public Function verificarApellido(ape As String, emp As Empleado) As Boolean
-        Dim opcion As String
-        Const numeros = "0123456789"
-
-        If ape.IndexOfAny(numeros.ToArray) > -1 Then
-            Console.ForegroundColor = ConsoleColor.Red
-            Console.Write("Ha habido un error al ingresar los datos. ¿Desea repetir? (s/n): ")
-            Console.ForegroundColor = ConsoleColor.White
-            opcion = Console.ReadLine()
-            If (opcion = "s") Then
-                Console.Write("Apellido: ")
-                Dim ape2 As String = Console.ReadLine()
-                If ape2.IndexOfAny(numeros.ToArray) > -1 Then
-                    Console.WriteLine("")
-                    Console.ForegroundColor = ConsoleColor.Red
-                    Console.CursorVisible = False
-                    Console.Write("No debe contener caracteres numéricos (pulse cualquier tecla para volver al menú)")
-                    Console.ForegroundColor = ConsoleColor.White
-                    Console.ReadLine()
-                    Console.CursorVisible = True
-                    Return False
-                Else
-                    emp._apellido.Add(ape2.ToUpper)
-                    Return True
-                End If
-            ElseIf (opcion = "n") Then
-                Return False
-            End If
-        Else
-            emp._apellido.Add(ape.ToUpper)
-            Return True
-        End If
-        Return False
-    End Function
-
-    Public Function verificarSegNombre(nom As String, emp As Empleado) As Boolean
-        Dim opcion As String
-        Const numeros = "0123456789"
-
-        If nom.IndexOfAny(numeros.ToArray) > -1 Then
-            Console.ForegroundColor = ConsoleColor.Red
-            Console.Write("Ha habido un error al ingresar los datos. ¿Desea repetir? (s/n): ")
-            Console.ForegroundColor = ConsoleColor.White
-            opcion = Console.ReadLine()
-            If (opcion = "s") Then
-                Console.Write("Segundo nombre (si no posee digite 0): ")
-                Dim nom2 As String = Console.ReadLine()
-                If nom2.IndexOfAny(numeros.ToArray) > -1 Then
-                    Console.WriteLine("")
-                    Console.ForegroundColor = ConsoleColor.Red
-                    Console.CursorVisible = False
-                    Console.Write("No debe contener caracteres numéricos (pulse cualquier tecla para volver al menú)")
-                    Console.ForegroundColor = ConsoleColor.White
-                    Console.ReadLine()
-                    Console.CursorVisible = True
-                    Return False
-                Else
-                    emp._SegundoNombre.Add(nom2.ToUpper)
-                    Return True
-                End If
-            ElseIf (opcion = "n") Then
-                Return False
-            End If
-        Else
-            emp._SegundoNombre.Add(nom.ToUpper)
-            Return True
-        End If
-        Return False
-    End Function
-
-    Public Function verificarSegApellido(ape As String, emp As Empleado) As Boolean
-        Dim opcion As String
-        Const numeros = "0123456789"
-
-        If ape.IndexOfAny(numeros.ToArray) > -1 Then
-            Console.ForegroundColor = ConsoleColor.Red
-            Console.Write("Ha habido un error al ingresar los datos. ¿Desea repetir? (s/n): ")
-            Console.ForegroundColor = ConsoleColor.White
-            opcion = Console.ReadLine()
-            If (opcion = "s") Then
-                Console.Write("Apellido: ")
-                Dim ape2 As String = Console.ReadLine()
-                If ape2.IndexOfAny(numeros.ToArray) > -1 Then
-                    Console.WriteLine("")
-                    Console.ForegroundColor = ConsoleColor.Red
-                    Console.CursorVisible = False
-                    Console.Write("No debe contener caracteres numéricos (pulse cualquier tecla para volver al menú)")
-                    Console.ForegroundColor = ConsoleColor.White
-                    Console.ReadLine()
-                    Console.CursorVisible = True
-                    Return False
-                Else
-                    emp._SegundoApellido.Add(ape2.ToUpper)
-                    Return True
-                End If
-            ElseIf (opcion = "n") Then
-                Return False
-            End If
-        Else
-            emp._SegundoApellido.Add(ape.ToUpper)
+            array.Add(string1.ToUpper)
             Return True
         End If
         Return False

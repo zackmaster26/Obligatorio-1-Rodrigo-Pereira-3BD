@@ -37,23 +37,15 @@ Module Module1
         dire = Nothing
     End Sub
 
-    Private Function modificar(o As String, contador As Integer, array As ArrayList) As Boolean
-        If IsNumeric(o) Then
-            Console.ForegroundColor = ConsoleColor.Red
-            Console.Write(vbNewLine)
-            Console.CursorVisible = False
-            Console.WriteLine("No debe contener números")
-            Console.ForegroundColor = ConsoleColor.White
-            Threading.Thread.Sleep(1500)
-            Console.CursorVisible = True
-            Return False
-        Else
-            array.Insert(contador, o)
-            array.RemoveAt(contador + 1)
-            Return True
-        End If
-        Return False
-    End Function
+    Private Sub mostrar(array As ArrayList, i As Integer, texto1 As String, texto2 As String)
+        Console.Clear()
+        Console.ForegroundColor = ConsoleColor.Blue
+        Console.WriteLine("Empleado " + emp._cedula.Item(i))
+        Console.ForegroundColor = ConsoleColor.White
+        Console.Write(vbNewLine)
+        Console.WriteLine(texto1 + array.Item(i))
+        Console.Write(texto2)
+    End Sub
 
     Sub Main()
 
@@ -123,7 +115,7 @@ Module Module1
                                 vaciar()
                                 Exit Select
                             End If
-                            If (met.verificarNombre(nom, emp) = False) Then
+                            If (met.verificarString(nom, emp._nombre, "Nombre: ") = False) Then
                                 met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
                                 vaciar()
                                 Exit Select
@@ -144,7 +136,7 @@ Module Module1
                                 Exit Select
                             End If
                             If (nom2 <> "0") Then
-                                If (met.verificarSegNombre(nom2, emp) = False) Then
+                                If (met.verificarString(nom2, emp._SegundoNombre, "Segundo nombre (si no posee digite 0): ") = False) Then
                                     met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
                                     vaciar()
                                     Exit Select
@@ -167,7 +159,7 @@ Module Module1
                                 vaciar()
                                 Exit Select
                             End If
-                            If (met.verificarApellido(ape, emp) = False) Then
+                            If (met.verificarString(ape, emp._apellido, "Apellido: ") = False) Then
                                 met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
                                 vaciar()
                                 Exit Select
@@ -187,7 +179,7 @@ Module Module1
                                 vaciar()
                                 Exit Select
                             End If
-                            If (met.verificarSegApellido(ape2, emp) = False) Then
+                            If (met.verificarString(ape2, emp._SegundoApellido, "Segundo apellido: ") = False) Then
                                 met.borrarDatos(emp, nom, ced1, ape, nom2, ape2, dire, sueldo1, tipo)
                                 vaciar()
                                 Exit Select
@@ -336,7 +328,9 @@ Module Module1
 
                         For j As Integer = 0 To emp._tel.GetLength(0) - 1
                             If (emp._tel.GetValue(j, 0) = emp._cedula.Item(i)) Then
-                                Console.Write(emp._tel.GetValue(j, 1) & "  ")
+                                If (emp._tel.GetValue(j, 1) <> 0) Then
+                                    Console.Write(emp._tel.GetValue(j, 1) & "  ")
+                                End If
                             End If
                         Next
 
@@ -377,6 +371,9 @@ Module Module1
                     Exit Do
 
                 Case 4
+                    'SEGUIR CON EL MODIFICAR
+                    'INTENTAR HACER UN SUB MOSTRAR PARA PONER LA PRIMERA PARTE DEL CASE, HASTA EL DIM NUEVONOMBRE
+
                     Dim o As Byte = 10
                     If (emp._cedula.Count <> 0) Then
                         Console.Clear()
@@ -405,31 +402,133 @@ Module Module1
                                     o = Byte.Parse(Console.ReadLine())
 
                                     Select Case o
+
                                         Case 1
-                                            Console.Clear()
-                                            Console.ForegroundColor = ConsoleColor.Blue
-                                            Console.WriteLine("Empleado " + emp._cedula.Item(i))
-                                            Console.ForegroundColor = ConsoleColor.White
-                                            Console.Write(vbNewLine)
-                                            Console.WriteLine("Nombre antiguo " + emp._nombre.Item(i))
-                                            Console.Write("Nombre nuevo: ")
+
+                                            mostrar(emp._nombre, i, "Nombre antiguo ", "Nombre nuevo: ")
                                             Dim nuevoNombre As String = Console.ReadLine
-                                            If (modificar(nuevoNombre, i, emp._nombre) = False) Then
+                                            If nuevoNombre <> "!" Then
+                                                If (met.modificar(nuevoNombre, i, emp._nombre) = False) Then
+                                                    Exit Select
+                                                End If
+                                            Else
                                                 Exit Select
+                                            End If
+
+                                        Case 2
+
+                                            If (emp._SegundoNombre.Item(i) <> "no") Then
+                                                mostrar(emp._SegundoNombre, i, "Segundo nombre antiguo ", "Segundo nombre nuevo: ")
+                                                Dim nuevoSegNombre As String = Console.ReadLine
+                                                If nuevoSegNombre <> "!" Then
+                                                    If (met.modificar(nuevoSegNombre, i, emp._SegundoNombre) = False) Then
+                                                        Exit Select
+                                                    End If
+                                                Else
+                                                    Exit Select
+                                                End If
+                                            Else
+                                                Console.Write("Este empleado no tiene segundo nombre")
+                                                Threading.Thread.Sleep(1500)
+                                                Exit Select
+                                            End If
+
+                                        Case 3
+
+                                            mostrar(emp._SegundoNombre, i, "Apellido antiguo ", "Apellido nuevo: ")
+                                            Dim nuevoApe As String = Console.ReadLine
+                                            If nuevoApe <> "!" Then
+                                                If (met.modificar(nuevoApe, i, emp._apellido) = False) Then
+                                                    Exit Select
+                                                End If
+                                            Else
+                                                Exit Select
+                                            End If
+
+                                        Case 4
+
+                                            mostrar(emp._SegundoApellido, i, "Segundo apellido antiguo ", "Segundo apellido nuevo: ")
+                                            Dim nuevoSegApe As String = Console.ReadLine
+                                            If nuevoSegApe <> "!" Then
+                                                If (met.modificar(nuevoSegApe, i, emp._SegundoApellido) = False) Then
+                                                    Exit Select
+                                                End If
+                                            Else
+                                                Exit Select
+                                            End If
+
+                                        Case 5
+                                            Dim num As Byte = 0
+                                            Dim aux As New ArrayList
+                                            Dim modTel As Byte = 10
+
+                                            Console.Clear()
+                                            For k As Integer = 0 To emp._tel.GetLength(0) - 1
+
+                                                If (emp._tel.GetValue(k, 0) = emp._cedula.Item(i)) Then
+                                                    If (emp._tel.GetValue(k, 1) <> 0) Then
+                                                        Console.WriteLine("Teléfono " & num + 1 & ": " & emp._tel.GetValue(k, 1))
+                                                        num += 1
+                                                        aux.Add(k)
+                                                    End If
+                                                End If
+
+                                            Next
+
+                                            Console.Write(vbNewLine)
+                                            Console.WriteLine("1) Modificar")
+                                            Console.WriteLine("2) Eliminar")
+                                            Console.Write("Opción: ")
+                                            Dim opTel As Byte = Byte.Parse(Console.ReadLine)
+                                            If (opTel = 1) Then
+                                                Console.Write("¿Qué telefono desea modificar?: ")
+                                                modTel = Byte.Parse(Console.ReadLine)
+                                                If (modTel <> Nothing) Then
+                                                    If (modTel > num And modTel = 0) Then
+                                                        Exit Select
+                                                    Else
+                                                        Dim indice As Integer
+                                                        For j As Integer = 0 To aux.Count - 1
+                                                            indice = aux.Item(modTel - 1)
+                                                        Next
+                                                        Console.Write("Nuevo teléfono: ")
+                                                        Dim telString As String = Console.ReadLine
+                                                        If (met.sinDatos(telString) = False) Then
+                                                            Exit Select
+                                                        Else
+                                                            If IsNumeric(telString) Then
+                                                                Dim nuevoTel As Integer = telString
+                                                                emp._tel.SetValue(nuevoTel, indice, 1)
+                                                            End If
+                                                        End If
+                                                    End If
+                                                Else
+                                                    Exit Select
+                                                End If
+
+                                                '' HACER QUE TODO EL MODIFICAR TELEFONO SEA UN METODO, ASÍ PUEDO HACER TAMBIÉN EL ELIMINAR A PARTIR DE ESO
+                                                '' HACER UNA OPCION PARA AÑADIR TELEFONO
+                                            ElseIf (opTel = 2) Then
+                                                Console.Write("¿Qué telefono desea eliminar?: ")
+                                                modTel = Byte.Parse(Console.ReadLine)
+                                                If (modTel <> Nothing) Then
+                                                    If (modTel > num And modTel = 0) Then
+                                                        Exit Select
+                                                    Else
+                                                        Dim indice As Integer
+                                                        For j As Integer = 0 To aux.Count - 1
+                                                            indice = aux.Item(modTel - 1)
+                                                        Next
+                                                        emp._tel.SetValue(Nothing, indice, 1)
+                                                    End If
+                                                End If
                                             End If
 
                                     End Select
 
                                 Loop
 
-                                'Console.WriteLine("Nuevo nombre: ")
-                                'Dim nuevoNombre As String = Console.ReadLine
-                                ' emp._nombre.Insert(i, nuevoNombre)
-                                'emp._nombre.RemoveAt(i + 1)
-
                             End If
-
-
                         Next
                     Else
                         Exit Select
