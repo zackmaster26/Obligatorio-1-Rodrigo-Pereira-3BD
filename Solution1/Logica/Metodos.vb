@@ -1,13 +1,13 @@
 ﻿Public Class Metodos
 
-    Public Function salir(op As String) As Boolean
+    Public Function salir(op As String, texto As String, ms As Integer) As Boolean
         If (op = "!") Then
             Console.Write(vbNewLine)
             Console.ForegroundColor = ConsoleColor.Red
             Console.CursorVisible = False
-            Console.Write("Se borraron los datos ingresados")
+            Console.Write(texto)
             Console.ForegroundColor = ConsoleColor.White
-            Threading.Thread.Sleep(1500)
+            Threading.Thread.Sleep(ms)
             Console.CursorVisible = True
             Return False
         End If
@@ -45,6 +45,51 @@
         Return False
     End Function
 
+    Public Function modificarTel(emp As Empleado, i As Integer, aux As ArrayList, num As Byte, modTel As Byte, opTel As Byte) As Boolean
+        If (modTel <> Nothing) Then
+            If (modTel > num Or modTel = 0) Then
+                Return False
+            Else
+                Dim indice As Integer
+                For j As Integer = 0 To aux.Count - 1
+                    indice = aux.Item(modTel - 1)
+                Next
+                Console.Write("Nuevo teléfono: ")
+                Dim telString As String = Console.ReadLine
+                If (sinDatos(telString) = False) Then
+                    Return False
+                Else
+                    If IsNumeric(telString) Then
+                        Dim nuevoTel As Integer = telString
+                        emp._tel.SetValue(nuevoTel, indice, 1)
+                        Return True
+                    Else
+                        Return False
+                    End If
+                End If
+            End If
+        Else
+            Return False
+        End If
+        Return False
+    End Function
+
+    Public Function eliminarTel(emp As Empleado, i As Integer, aux As ArrayList, num As Byte, modTel As Byte, opTel As Byte) As Boolean
+        If (modTel <> Nothing) Then
+            If (modTel > num Or modTel = 0) Then
+                Return False
+            Else
+                Dim indice As Integer
+                For j As Integer = 0 To aux.Count - 1
+                    indice = aux.Item(modTel - 1)
+                Next
+                emp._tel.SetValue(Nothing, indice, 1)
+                Return True
+            End If
+        End If
+        Return False
+    End Function
+
     Public Function verificarCedula(ced As String, emp As Empleado, repCed As Boolean) As Boolean
 
         If (ced.Length = 7 Or ced.Length = 8) Then
@@ -54,9 +99,9 @@
                     Console.WriteLine("")
                     Console.ForegroundColor = ConsoleColor.Red
                     Console.CursorVisible = False
-                    Console.Write("Esta cédula ya fue ingresada (pulse cualquier tecla para volver al menú")
+                    Console.Write("Esta cédula ya fue ingresada")
                     Console.ForegroundColor = ConsoleColor.White
-                    Console.ReadLine()
+                    Threading.Thread.Sleep(1500)
                     Console.CursorVisible = True
                     Return False
                 End If
@@ -68,10 +113,10 @@
         Else
             Console.WriteLine("")
             Console.ForegroundColor = ConsoleColor.Red
-            Console.Write("Debe ingresar una cédula válida (pulse cualquier tecla)")
+            Console.Write("Debe ingresar una cédula válida")
             Console.CursorVisible = False
             Console.ForegroundColor = ConsoleColor.White
-            Console.ReadLine()
+            Threading.Thread.Sleep(1500)
             Console.CursorVisible = True
             Return False
         End If
@@ -90,16 +135,16 @@
             If (opcion = "s") Then
                 Console.Write(texto)
                 Dim string2 As String = Console.ReadLine
-                If (salir(string2) = False) Then
+                If (salir(string2, "Se borraron los datos ingresados", 1500) = False) Then
                     Return False
                 End If
                 If string2.IndexOfAny(numeros.ToArray) > -1 Then
                     Console.WriteLine("")
                     Console.ForegroundColor = ConsoleColor.Red
                     Console.CursorVisible = False
-                    Console.Write("No debe contener caracteres numéricos (pulse cualquier tecla para volver al menú)")
+                    Console.Write("No debe contener caracteres numéricos")
                     Console.ForegroundColor = ConsoleColor.White
-                    Console.ReadLine()
+                    Threading.Thread.Sleep(1500)
                     Console.CursorVisible = True
                     Return False
                 Else
@@ -141,9 +186,9 @@
                     Console.WriteLine("")
                     Console.ForegroundColor = ConsoleColor.Red
                     Console.CursorVisible = False
-                    Console.Write("Error al ingresar el dato (pulse cualquier tecla para volver al menú)")
+                    Console.Write("Error al ingresar el dato")
                     Console.ForegroundColor = ConsoleColor.White
-                    Console.ReadLine()
+                    Threading.Thread.Sleep(1500)
                     Console.CursorVisible = True
                     Return False
                 End If
@@ -162,7 +207,6 @@
         If (tipo1 = "1" Or tipo1 = "2" Or tipo1 = "3") Then
             tipo = tipo1
             emp._tipoEmpleado.Add(tipo)
-            cal.MontoIndividual(emp)
             Return True
         Else
             Console.ForegroundColor = ConsoleColor.Red
@@ -175,15 +219,14 @@
                 If (tipo2 = "1" Or tipo2 = "2" Or tipo2 = "3") Then
                     tipo3 = tipo2
                     emp._tipoEmpleado.Add(tipo3)
-                    cal.MontoIndividual(emp)
                     Return True
                 Else
                     Console.WriteLine("")
                     Console.ForegroundColor = ConsoleColor.Red
                     Console.CursorVisible = False
-                    Console.Write("Error al ingresar el dato (pulse cualquier tecla para volver al menú)")
+                    Console.Write("Error al ingresar el dato")
                     Console.ForegroundColor = ConsoleColor.White
-                    Console.ReadLine()
+                    Threading.Thread.Sleep(1500)
                     Console.CursorVisible = True
                     Return False
                 End If

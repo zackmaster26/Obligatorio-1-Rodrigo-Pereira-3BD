@@ -6,10 +6,10 @@
     Private segundoNombre As New ArrayList
     Private segundoApellido As New ArrayList
     Private direccion As New ArrayList
-    Private telefonos(999, 1) As Integer
+    Private telefonos(99, 1) As Integer
     Private sueldoBase As New ArrayList
     Private tipoEmpleado As New ArrayList
-    Private sueldoTotal As New ArrayList
+    Private bajaLogica As New ArrayList
 
     Public Property _cedula As ArrayList
         Get
@@ -56,15 +56,6 @@
         End Set
     End Property
 
-    Public Property _sueldoTotal As ArrayList
-        Get
-            Return sueldoTotal
-        End Get
-        Set(value As ArrayList)
-            sueldoTotal = value
-        End Set
-    End Property
-
     Public Property _direccion As ArrayList
         Get
             Return direccion
@@ -98,6 +89,15 @@
         End Get
         Set(value As ArrayList)
             segundoApellido = value
+        End Set
+    End Property
+
+    Public Property _bajaLogica As ArrayList
+        Get
+            Return bajaLogica
+        End Get
+        Set(value As ArrayList)
+            bajaLogica = value
         End Set
     End Property
 End Class

@@ -25,32 +25,28 @@
         Return total
     End Function
 
-    Public Function MontoIndividual(emp As Empleado)
-
+    Public Function SueldoNeto(emp As Empleado, i As Integer)
         Dim diferencia As Double
         Dim sueldo As Integer
         Dim total As Double
 
-        For i As Integer = 0 To emp._sueldo.Count - 1
-            If (emp._tipoEmpleado.Item(i) = 1) Then
-                total = emp._sueldo.Item(i)
-                diferencia = total * 0.97
-                sueldo = diferencia + total
-
-            ElseIf (emp._tipoEmpleado.Item(i) = 2) Then
-                total = emp._sueldo.Item(i)
-                diferencia = total * 0.38
-                sueldo = diferencia + total
-            ElseIf (emp._tipoEmpleado.Item(i) = 3) Then
-                total = emp._sueldo.Item(i)
-                diferencia = total * 0.27
-                sueldo = diferencia + total
-            End If
-        Next
-
-        emp._sueldoTotal.Add(sueldo)
-
-        Return sueldo
+        If (emp._tipoEmpleado.Item(i) = 1) Then
+            total = emp._sueldo.Item(i)
+            diferencia = total * 0.97
+            sueldo = diferencia + total
+            Return sueldo
+        ElseIf (emp._tipoEmpleado.Item(i) = 2) Then
+            total = emp._sueldo.Item(i)
+            diferencia = total * 0.38
+            sueldo = diferencia + total
+            Return sueldo
+        ElseIf (emp._tipoEmpleado.Item(i) = 3) Then
+            total = emp._sueldo.Item(i)
+            diferencia = total * 0.27
+            sueldo = diferencia + total
+            Return sueldo
+        End If
+        Return 0
     End Function
 
 End Class
