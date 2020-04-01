@@ -339,7 +339,12 @@ Module Module1
                             mostrarTipo = "Administrativo"
                         End If
 
-                        Console.WriteLine("Cédula: " + emp._cedula.Item(i))
+                        Dim verificador As String = emp._cedula.Item(i)
+                        If (verificador.Length = 8) Then
+                            Console.WriteLine("Cédula: " + verificador.Substring(0, 1) + "." + verificador.Substring(1, 3) + "." + verificador.Substring(4, 3) + "-" + verificador.Substring(7, 1))
+                        ElseIf (verificador.Length = 7) Then
+                            Console.WriteLine("Cédula: " + verificador.Substring(0, 3) + "." + verificador.Substring(3, 3) + "-" + verificador.Substring(6, 1))
+                        End If
                         Console.Write("Nombre: " + emp._nombre.Item(i) + " ")
 
                         If (emp._SegundoNombre.Item(i) = "no") Then
@@ -353,10 +358,14 @@ Module Module1
                         Console.WriteLine("Dirección: " + emp._direccion.Item(i))
                         Console.Write("Teléfonos: ")
 
+                        Dim barrita As Integer = 0
                         For j As Integer = 0 To emp._tel.GetLength(0) - 1
                             If (emp._tel.GetValue(j, 0) = emp._cedula.Item(i)) Then
                                 If (emp._tel.GetValue(j, 1) <> 0) Then
-                                    Console.Write(emp._tel.GetValue(j, 1) & "  ")
+                                    Console.Write(emp._tel.GetValue(j, 1))
+                                    If (j = Nothing) Then
+                                        Console.Write(" - ")
+                                    End If
                                 End If
                             End If
                         Next
@@ -710,9 +719,7 @@ Module Module1
                     opIncorrecta("Ingresó una opción incorrecta")
 
             End Select
-
         Loop
-
     End Sub
 
 End Module
