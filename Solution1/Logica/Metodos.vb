@@ -113,7 +113,7 @@
         Else
             Console.WriteLine("")
             Console.ForegroundColor = ConsoleColor.Red
-            Console.Write("Debe ingresar una cédula válida")
+            Console.Write("Debe ingresar una cédula de longitud válida")
             Console.CursorVisible = False
             Console.ForegroundColor = ConsoleColor.White
             Threading.Thread.Sleep(1500)
@@ -121,6 +121,61 @@
             Return False
         End If
         Return False
+    End Function
+
+
+    Public Function digitoVerificador(ced As String) As Boolean
+
+        Dim array As New ArrayList
+        Dim numeros = New Integer() {2, 9, 8, 7, 6, 3, 4}
+        Dim acumulador As Integer = 0
+        Dim cuenta As Integer = 0
+
+
+        If (ced.Length = 8) Then
+
+            Dim digito As String = ced.Substring(7, 1)
+            ced = ced.Substring(0, 7)
+
+            For i As Integer = 0 To ced.Length - 1
+                array.Add(ced.Substring(i, 1))
+            Next
+            For i As Integer = 0 To array.Count - 1
+                acumulador = acumulador + array.Item(i) * numeros(i)
+            Next
+
+            cuenta = 10 - (acumulador Mod 10)
+
+            If (cuenta = digito) Then
+                Return True
+            Else
+                Return False
+            End If
+
+        ElseIf (ced.Length = 7) Then
+
+            Dim digito As String = ced.Substring(6, 1)
+            ced = ced.Substring(0, 6)
+            numeros = {9, 8, 7, 6, 3, 4}
+
+            For i As Integer = 0 To ced.Length - 1
+                array.Add(ced.Substring(i, 1))
+            Next
+            For i As Integer = 0 To array.Count - 1
+                acumulador = acumulador + array.Item(i) * numeros(i)
+            Next
+
+            cuenta = 10 - (acumulador Mod 10)
+
+            If (cuenta = digito) Then
+                Return True
+            Else
+                Return False
+            End If
+
+        End If
+        Return False
+
     End Function
 
     Public Function verificarString(string1 As String, array As ArrayList, texto As String) As Boolean

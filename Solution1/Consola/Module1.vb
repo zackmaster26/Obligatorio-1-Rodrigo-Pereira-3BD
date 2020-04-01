@@ -108,10 +108,17 @@ Module Module1
                             opIncorrecta("La cédula no debe contener caracteres")
                             Exit Select
                         End If
-                        If met.verificarCedula(ced1, emp, repCed) = False Then
+                        If met.digitoVerificador(ced1) Then
+                            If met.verificarCedula(ced1, emp, repCed) = False Then
+                                vaciar()
+                                Exit Select
+                            End If
+                        Else
+                            opIncorrecta("El dígito verificador ingresado no es correcto")
                             vaciar()
                             Exit Select
                         End If
+
                     End If
 
 
@@ -428,7 +435,12 @@ Module Module1
                                         Console.ForegroundColor = ConsoleColor.Cyan
                                         Console.WriteLine("-------------------------------------------------MODIFICAR EMPLEADOS---------------------------------------------------")
                                         Console.ForegroundColor = ConsoleColor.White
-                                        Console.WriteLine("Identificación de empleado: " + emp._cedula.Item(i))
+                                        Dim verificador As String = emp._cedula.Item(i)
+                                        If (verificador.Length = 8) Then
+                                            Console.WriteLine("Identificación de empleado: " + verificador.Substring(0, 1) + "." + verificador.Substring(1, 3) + "." + verificador.Substring(4, 3) + "-" + verificador.Substring(7, 1))
+                                        ElseIf (verificador.Length = 7) Then
+                                            Console.WriteLine("Identificación de empleado: " + verificador.Substring(0, 3) + "." + verificador.Substring(3, 3) + "-" + verificador.Substring(6, 1))
+                                        End If
                                         Console.Write(vbNewLine)
                                         Console.WriteLine("1) Nombre")
                                         Console.WriteLine("2) Segundo nombre")
@@ -709,6 +721,14 @@ Module Module1
                         opIncorrecta("No se encuentran empleados registrados")
                         Exit Select
                     End If
+
+                Case 4
+
+                    Console.Clear()
+                    Console.ForegroundColor = ConsoleColor.Cyan
+                    Console.WriteLine("-------------------------------------------------ELIMINAR EMPLEADOS---------------------------------------------------")
+                    Console.ForegroundColor = ConsoleColor.White
+
 
                 Case 0
 
