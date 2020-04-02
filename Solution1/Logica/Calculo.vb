@@ -10,6 +10,7 @@
             For k As Integer = 0 To emp._bajaLogica.GetLength(0) - 1
                 If emp._bajaLogica.GetValue(k, 0) = emp._cedula.Item(i) Then
                     If emp._bajaLogica.GetValue(k, 1) = 1 Then
+
                         If (emp._tipoEmpleado.Item(i) = 1) Then
                             diferencia = emp._sueldo.Item(i) * 0.97
                             sueldo = diferencia + emp._sueldo.Item(i)
@@ -23,6 +24,7 @@
                             sueldo = diferencia + emp._sueldo.Item(i)
                             total = sueldo + total
                         End If
+
                     End If
                 End If
             Next
