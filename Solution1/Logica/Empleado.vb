@@ -9,7 +9,7 @@
     Private telefonos(99, 1) As Integer
     Private sueldoBase As New ArrayList
     Private tipoEmpleado As New ArrayList
-    Private bajaLogica As New ArrayList
+    Private bajaLogica(99, 1) As Integer
 
     Public Property _cedula As ArrayList
         Get
@@ -92,11 +92,11 @@
         End Set
     End Property
 
-    Public Property _bajaLogica As ArrayList
+    Public Property _bajaLogica As Integer(,)
         Get
             Return bajaLogica
         End Get
-        Set(value As ArrayList)
+        Set(value As Integer(,))
             bajaLogica = value
         End Set
     End Property

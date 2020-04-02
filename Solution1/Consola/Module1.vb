@@ -21,6 +21,7 @@ Module Module1
     Private tipo As String
     Private dire As String
     Private contador As Integer = 0
+    Private bajaLogica As Integer = 0
 
     Private Sub vaciar()
         ced = Nothing
@@ -44,16 +45,52 @@ Module Module1
     End Sub
 
     Private Sub opIncorrecta(texto As String)
+        Console.CursorVisible = False
         Console.ForegroundColor = ConsoleColor.Red
         Console.Write(vbNewLine)
-        Console.CursorVisible = False
         Console.Write(texto)
         Console.ForegroundColor = ConsoleColor.White
         Threading.Thread.Sleep(1500)
         Console.CursorVisible = True
     End Sub
 
+    Private Sub mostrarModificado(texto As String, i As Integer)
+        Console.Clear()
+        Console.ForegroundColor = ConsoleColor.Cyan
+        Console.WriteLine(texto)
+        Console.SetCursorPosition(i, 1)
+    End Sub
+
     Sub Main()
+
+
+        emp._cedula.Add(52645181)
+        emp._nombre.Add("rodrigo")
+        emp._SegundoNombre.Add("no")
+        emp._apellido.Add("pereira")
+        emp._SegundoApellido.Add("oseira")
+        emp._tel(0, 0) = 52645181
+        emp._tel(0, 1) = 26280259
+        emp._direccion.Add("llambi")
+        emp._sueldo.Add(20000)
+        emp._tipoEmpleado.Add(1)
+        emp._bajaLogica(0, 0) = 52645181
+        emp._bajaLogica(0, 1) = 1
+
+        emp._cedula.Add(18360276)
+        emp._nombre.Add("fernanda")
+        emp._SegundoNombre.Add("no")
+        emp._apellido.Add("oseira")
+        emp._SegundoApellido.Add("ruibal")
+        emp._tel(1, 0) = 18360276
+        emp._tel(1, 1) = 123456
+        emp._direccion.Add("llambi")
+        emp._sueldo.Add(50000)
+        emp._tipoEmpleado.Add(1)
+        emp._bajaLogica(1, 0) = 18360276
+        emp._bajaLogica(1, 1) = 1
+
+
 
         Console.Title = "Sistema de Registro"
         Console.ForegroundColor = ConsoleColor.White
@@ -312,6 +349,13 @@ Module Module1
                     End If
 
 
+
+                    emp._bajaLogica(bajaLogica, 0) = ced
+                    emp._bajaLogica(bajaLogica, 1) = 1
+                    bajaLogica += 1
+
+
+
                     Console.Write(vbNewLine)
                     Console.ForegroundColor = ConsoleColor.Red
                     Console.CursorVisible = False
@@ -337,66 +381,85 @@ Module Module1
                     Dim mostrarTipo As String = ""
 
                     For i As Integer = 0 To emp._cedula.Count - 1
-
-                        If (emp._tipoEmpleado.Item(i) = 1) Then
-                            mostrarTipo = "Gerente"
-                        ElseIf (emp._tipoEmpleado.Item(i) = 2) Then
-                            mostrarTipo = "Operario"
-                        ElseIf (emp._tipoEmpleado.Item(i) = 3) Then
-                            mostrarTipo = "Administrativo"
-                        End If
-
-                        Dim verificador As String = emp._cedula.Item(i)
-                        If (verificador.Length = 8) Then
-                            Console.WriteLine("Cédula: " + verificador.Substring(0, 1) + "." + verificador.Substring(1, 3) + "." + verificador.Substring(4, 3) + "-" + verificador.Substring(7, 1))
-                        ElseIf (verificador.Length = 7) Then
-                            Console.WriteLine("Cédula: " + verificador.Substring(0, 3) + "." + verificador.Substring(3, 3) + "-" + verificador.Substring(6, 1))
-                        End If
-                        Console.Write("Nombre: " + emp._nombre.Item(i) + " ")
-
-                        If (emp._SegundoNombre.Item(i) = "no") Then
-                            Console.Write(vbNewLine)
-                        Else
-                            Console.WriteLine(emp._SegundoNombre.Item(i))
-                        End If
-
-                        Console.Write("Apellido: " + emp._apellido.Item(i) + " ")
-                        Console.WriteLine(emp._SegundoApellido.Item(i))
-                        Console.WriteLine("Dirección: " + emp._direccion.Item(i))
-                        Console.Write("Teléfonos: ")
-
-                        Dim barrita As Integer = 0
-                        For j As Integer = 0 To emp._tel.GetLength(0) - 1
-                            If (emp._tel.GetValue(j, 0) = emp._cedula.Item(i)) Then
-                                If (emp._tel.GetValue(j, 1) <> 0) Then
-                                    Console.Write(emp._tel.GetValue(j, 1))
-                                    If (j = Nothing) Then
-                                        Console.Write(" - ")
+                        For k As Integer = 0 To emp._bajaLogica.GetLength(0) - 1
+                            If (emp._bajaLogica.GetValue(k, 0) = emp._cedula.Item(i)) Then
+                                If (emp._bajaLogica.GetValue(k, 1) = 1) Then
+                                    If (emp._tipoEmpleado.Item(i) = 1) Then
+                                        mostrarTipo = "Gerente"
+                                    ElseIf (emp._tipoEmpleado.Item(i) = 2) Then
+                                        mostrarTipo = "Operario"
+                                    ElseIf (emp._tipoEmpleado.Item(i) = 3) Then
+                                        mostrarTipo = "Administrativo"
                                     End If
+
+                                    Dim verificador As String = emp._cedula.Item(i)
+                                    If (verificador.Length = 8) Then
+                                        Console.WriteLine("Cédula: " + verificador.Substring(0, 1) + "." + verificador.Substring(1, 3) + "." + verificador.Substring(4, 3) + "-" + verificador.Substring(7, 1))
+                                    ElseIf (verificador.Length = 7) Then
+                                        Console.WriteLine("Cédula: " + verificador.Substring(0, 3) + "." + verificador.Substring(3, 3) + "-" + verificador.Substring(6, 1))
+                                    End If
+                                    Console.Write("Nombre: " + emp._nombre.Item(i) + " ")
+
+                                    If (emp._SegundoNombre.Item(i) = "no") Then
+                                        Console.Write(vbNewLine)
+                                    Else
+                                        Console.WriteLine(emp._SegundoNombre.Item(i))
+                                    End If
+
+                                    Console.Write("Apellido: " + emp._apellido.Item(i) + " ")
+                                    Console.WriteLine(emp._SegundoApellido.Item(i))
+                                    Console.WriteLine("Dirección: " + emp._direccion.Item(i))
+                                    Console.Write("Teléfonos: ")
+
+                                    Dim barrita As Integer = 0
+                                    For j As Integer = 0 To emp._tel.GetLength(0) - 1
+                                        If (emp._tel.GetValue(j, 0) = emp._cedula.Item(i)) Then
+                                            If (emp._tel.GetValue(j, 1) <> 0) Then
+                                                Console.Write(emp._tel.GetValue(j, 1))
+                                                If (j = Nothing Or j > 1) Then
+                                                    Console.Write(" - ")
+                                                End If
+                                            End If
+                                        End If
+                                    Next
+
+                                    Console.Write(vbNewLine)
+                                    Console.WriteLine("Cargo: " + mostrarTipo)
+                                    Console.WriteLine("Sueldo base: " + "$" & emp._sueldo.Item(i))
+                                    Console.WriteLine("Sueldo neto: " + "$" & cal.SueldoNeto(emp, i))
+
+                                    If (emp._cedula.Count > 1) Then
+                                        Console.WriteLine("------------------------------------------------------------------------------------------------------------------------")
+                                    End If
+                                Else
+
                                 End If
                             End If
                         Next
-
-                        Console.Write(vbNewLine)
-                        Console.WriteLine("Cargo: " + mostrarTipo)
-                        Console.WriteLine("Sueldo base: " + "$" & emp._sueldo.Item(i))
-                        Console.WriteLine("Sueldo neto: " + "$" & cal.SueldoNeto(emp, i))
-
-                        If (emp._cedula.Count > 1) Then
-                            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------")
-                        End If
                     Next
 
+                    Dim rep As Boolean = false
                     If (emp._cedula.Count <> 0) Then
+                        For i As Integer = 0 To emp._cedula.Count - 1
+                            For k As Integer = 0 To emp._bajaLogica.GetLength(0) - 1
+                                If (emp._cedula.Count >= 1 And emp._bajaLogica.GetValue(k, 0) = emp._cedula.Item(i)) Then
+                                    If (emp._bajaLogica.GetValue(k, 1) = 1) Then
+                                        rep = True
+                                    End If
+                                End If
+                            Next
+                        Next
+                    Else
+                        Console.Write("No hay datos para mostrar")
+                        Console.WriteLine("")
+                    End If
+                    If (rep) Then
                         Console.WriteLine("")
                         Console.WriteLine("")
                         Console.Write("El monto total a pagarle a todos los funcionarios es: ")
                         Console.ForegroundColor = ConsoleColor.Blue
                         Console.WriteLine("$" & cal.MontoTotal(emp))
                         Console.ForegroundColor = ConsoleColor.White
-                        Console.WriteLine("")
-                    Else
-                        Console.Write("No hay datos para mostrar")
                         Console.WriteLine("")
                     End If
 
@@ -410,12 +473,454 @@ Module Module1
 
                 Case 3
 
+                    Dim index As Integer = 0
+                    Dim repCed1 As Boolean = False
                     Dim opModificar As Byte = 10
 
                     If (emp._cedula.Count <> 0) Then
                         Console.Clear()
                         Console.ForegroundColor = ConsoleColor.Cyan
-                        Console.Write("-------------------------------------------------REGISTRO DE EMPLEADOS-------------------------------------------------")
+                        Console.Write("-------------------------------------------------MODIFICAR EMPLEADOS----------------------------------------------------")
+                        Console.Write(vbNewLine)
+                        Console.ForegroundColor = ConsoleColor.White
+                        Console.Write(vbNewLine)
+                        Console.Write("Cedula del empleado: ")
+                        Dim busCed As String = Console.ReadLine()
+
+                        If (met.sinDatos(busCed) = False) Then
+                            Exit Select
+                        End If
+
+                        For k As Integer = 0 To emp._cedula.Count - 1
+                            If (emp._cedula.Item(k) = busCed) Then
+                                If (emp._bajaLogica.GetValue(k, 0) = busCed) Then
+                                    If (emp._bajaLogica.GetValue(k, 1) = 1) Then
+                                        index = k
+                                        repCed1 = True
+                                    End If
+                                End If
+                            End If
+                        Next
+
+                        If (repCed1 = True) Then
+                            Do While opModificar <> 0
+
+                                Console.Clear()
+                                Console.ForegroundColor = ConsoleColor.Cyan
+                                Console.WriteLine("-------------------------------------------------MODIFICAR EMPLEADOS---------------------------------------------------")
+                                Console.ForegroundColor = ConsoleColor.White
+                                Dim verificador As String = emp._cedula.Item(index)
+                                If (verificador.Length = 8) Then
+                                    Console.WriteLine("Identificación de empleado: " + verificador.Substring(0, 1) + "." + verificador.Substring(1, 3) + "." + verificador.Substring(4, 3) + "-" + verificador.Substring(7, 1))
+                                ElseIf (verificador.Length = 7) Then
+                                    Console.WriteLine("Identificación de empleado: " + verificador.Substring(0, 3) + "." + verificador.Substring(3, 3) + "-" + verificador.Substring(6, 1))
+                                End If
+                                Console.Write(vbNewLine)
+                                Console.WriteLine("1) Nombre")
+                                Console.WriteLine("2) Segundo nombre")
+                                Console.WriteLine("3) Apellido")
+                                Console.WriteLine("4) Segundo apellido")
+                                Console.WriteLine("5) Teléfonos")
+                                Console.WriteLine("6) Dirección")
+                                Console.WriteLine("7) Sueldo")
+                                Console.WriteLine("8) Cargo")
+                                Console.WriteLine("0) Volver")
+                                Console.Write("Opción: ")
+
+                                opModificar = Byte.Parse(Console.ReadLine())
+
+                                Select Case opModificar
+
+                                    Case 1
+
+                                        mostrarModificado("-----------------------------------------------------MODIFICAR NOMBRE---------------------------------------------------", 49)
+                                        Console.Write(" (Ingrese ! para salir)")
+                                        Console.ForegroundColor = ConsoleColor.White
+                                        Console.Write(vbNewLine)
+                                        mostrar(emp._nombre, index, "Nombre: ", "Nombre nuevo: ")
+                                        Dim nuevoNombre As String = Console.ReadLine
+                                        If (met.salir(nuevoNombre, "", 0)) Then
+                                            If (met.sinDatos(nuevoNombre)) Then
+                                                If (met.modificar(nuevoNombre, index, emp._nombre) = False) Then
+                                                    Exit Select
+                                                End If
+                                            Else
+                                                Exit Select
+                                            End If
+                                        Else
+                                            Exit Select
+                                        End If
+
+                                    Case 2
+
+                                        If (emp._SegundoNombre.Item(index) <> "no") Then
+                                            mostrarModificado("-----------------------------------------------MODIFICAR SEGUNDO NOMBRE-------------------------------------------------", 47)
+                                            Console.Write(" (Ingrese ! para salir)")
+                                            Console.ForegroundColor = ConsoleColor.White
+                                            Console.Write(vbNewLine)
+                                            mostrar(emp._SegundoNombre, index, "Segundo nombre: ", "Segundo nombre nuevo: ")
+                                            Dim nuevoSegNombre As String = Console.ReadLine
+                                            If (met.salir(nuevoSegNombre, "", 0)) Then
+                                                If (met.sinDatos(nuevoSegNombre)) Then
+                                                    If (met.modificar(nuevoSegNombre, index, emp._SegundoNombre) = False) Then
+                                                        Exit Select
+                                                    End If
+                                                Else
+                                                    Exit Select
+                                                End If
+                                            Else
+                                                Exit Select
+                                            End If
+                                        Else
+                                            opIncorrecta("Este empleado no tiene segundo nombre")
+                                            Exit Select
+                                        End If
+
+                                    Case 3
+
+
+
+
+
+
+
+                                End Select
+                            Loop
+
+
+                        Else
+                            opIncorrecta("Esta cédula no existe en el sistema")
+                            Exit Select
+
+                        End If
+
+                    End If
+
+
+
+
+
+                    'If (emp._cedula.Count <> 0) Then
+                    '    Console.Clear()
+                    '    Console.ForegroundColor = ConsoleColor.Cyan
+                    '    Console.Write("-------------------------------------------------MODIFICAR EMPLEADOS----------------------------------------------------")
+                    '    Console.Write(vbNewLine)
+                    '    Console.ForegroundColor = ConsoleColor.White
+                    '    Console.Write(vbNewLine)
+                    '    Console.Write("Cedula del empleado: ")
+                    '    cedd = Console.ReadLine()
+                    '    If (met.sinDatos(cedd)) Then
+
+                    '        For k As Integer = 0 To emp._cedula.Count - 1
+                    '            If (emp._cedula.Item(k) = cedd) Then
+                    '                index = k
+                    '                repCed1 = True
+                    '            Else
+                    '                repCed1 = False
+                    '            End If
+                    '        Next
+
+
+                    '        If (repCed1) Then
+
+                    '            Do While opModificar <> 0
+
+                    '                Console.Clear()
+                    '                Console.ForegroundColor = ConsoleColor.Cyan
+                    '                Console.WriteLine("-------------------------------------------------MODIFICAR EMPLEADOS---------------------------------------------------")
+                    '                Console.ForegroundColor = ConsoleColor.White
+                    '                Dim verificador As String = emp._cedula.Item(index)
+                    '                If (verificador.Length = 8) Then
+                    '                    Console.WriteLine("Identificación de empleado: " + verificador.Substring(0, 1) + "." + verificador.Substring(1, 3) + "." + verificador.Substring(4, 3) + "-" + verificador.Substring(7, 1))
+                    '                ElseIf (verificador.Length = 7) Then
+                    '                    Console.WriteLine("Identificación de empleado: " + verificador.Substring(0, 3) + "." + verificador.Substring(3, 3) + "-" + verificador.Substring(6, 1))
+                    '                End If
+                    '                Console.Write(vbNewLine)
+                    '                Console.WriteLine("1) Nombre")
+                    '                Console.WriteLine("2) Segundo nombre")
+                    '                Console.WriteLine("3) Apellido")
+                    '                Console.WriteLine("4) Segundo apellido")
+                    '                Console.WriteLine("5) Teléfonos")
+                    '                Console.WriteLine("6) Dirección")
+                    '                Console.WriteLine("7) Sueldo")
+                    '                Console.WriteLine("8) Cargo")
+                    '                Console.WriteLine("0) Volver")
+                    '                Console.Write("Opción: ")
+
+                    '                opModificar = Integer.Parse(Console.ReadLine())
+
+                    '                Select Case opModificar
+
+                    '                    Case 1
+
+                    '                        Console.Clear()
+                    '                        Console.ForegroundColor = ConsoleColor.Cyan
+                    '                        Console.WriteLine("-----------------------------------------------------MODIFICAR NOMBRE---------------------------------------------------")
+                    '                        Console.SetCursorPosition(49, 1)
+                    '                        Console.Write(" (Ingrese ! para salir)")
+                    '                        Console.ForegroundColor = ConsoleColor.White
+                    '                        Console.Write(vbNewLine)
+                    '                        mostrar(emp._nombre, index, "Nombre: ", "Nombre nuevo: ")
+                    '                        Dim nuevoNombre As String = Console.ReadLine
+                    '                        If (met.salir(nuevoNombre, "", 0)) Then
+                    '                            If (met.sinDatos(nuevoNombre)) Then
+                    '                                If (met.modificar(nuevoNombre, index, emp._nombre) = False) Then
+                    '                                    Exit Select
+                    '                                End If
+                    '                            Else
+                    '                                Exit Select
+                    '                            End If
+                    '                        Else
+                    '                            Exit Select
+                    '                        End If
+
+                    '                    Case 2
+
+                    '                        If (emp._SegundoNombre.Item(index) <> "no") Then
+                    '                            Console.Clear()
+                    '                            Console.ForegroundColor = ConsoleColor.Cyan
+                    '                            Console.WriteLine("-----------------------------------------------MODIFICAR SEGUNDO NOMBRE-------------------------------------------------")
+                    '                            Console.SetCursorPosition(47, 1)
+                    '                            Console.Write(" (Ingrese ! para salir)")
+                    '                            Console.ForegroundColor = ConsoleColor.White
+                    '                            Console.Write(vbNewLine)
+                    '                            mostrar(emp._SegundoNombre, index, "Segundo nombre: ", "Segundo nombre nuevo: ")
+                    '                            Dim nuevoSegNombre As String = Console.ReadLine
+                    '                            If (met.salir(nuevoSegNombre, "", 0)) Then
+                    '                                If (met.sinDatos(nuevoSegNombre)) Then
+                    '                                    If (met.modificar(nuevoSegNombre, index, emp._SegundoNombre) = False) Then
+                    '                                        Exit Select
+                    '                                    End If
+                    '                                Else
+                    '                                    Exit Select
+                    '                                End If
+                    '                            Else
+                    '                                Exit Select
+                    '                            End If
+                    '                        Else
+                    '                            Console.CursorVisible = False
+                    '                            opIncorrecta("Este empleado no tiene segundo nombre")
+                    '                            Threading.Thread.Sleep(1500)
+                    '                            Exit Select
+                    '                            Console.CursorVisible = True
+                    '                        End If
+
+                    '                    Case 3
+
+                    '                        Console.Clear()
+                    '                        Console.ForegroundColor = ConsoleColor.Cyan
+                    '                        Console.WriteLine("---------------------------------------------------MODIFICAR APELLIDO---------------------------------------------------")
+                    '                        Console.SetCursorPosition(47.5, 1)
+                    '                        Console.Write(" (Ingrese ! para salir)")
+                    '                        Console.ForegroundColor = ConsoleColor.White
+                    '                        Console.Write(vbNewLine)
+                    '                        mostrar(emp._apellido, index, "Apellido: ", "Apellido nuevo: ")
+                    '                        Dim nuevoApe As String = Console.ReadLine
+                    '                        If (met.salir(nuevoApe, "", 0)) Then
+                    '                            If (met.sinDatos(nuevoApe)) Then
+                    '                                If (met.modificar(nuevoApe, index, emp._apellido) = False) Then
+                    '                                    Exit Select
+                    '                                End If
+                    '                            Else
+                    '                                Exit Select
+                    '                            End If
+                    '                        Else
+                    '                            Exit Select
+                    '                        End If
+
+                    '                    Case 4
+
+                    '                        Console.Clear()
+                    '                        Console.ForegroundColor = ConsoleColor.Cyan
+                    '                        Console.WriteLine("------------------------------------------------MODIFICAR SEGUNDO APELLIDO----------------------------------------------")
+                    '                        Console.SetCursorPosition(49, 1)
+                    '                        Console.Write(" (Ingrese ! para salir)")
+                    '                        Console.ForegroundColor = ConsoleColor.White
+                    '                        Console.Write(vbNewLine)
+                    '                        mostrar(emp._SegundoApellido, index, "Segundo apellido: ", "Segundo apellido nuevo: ")
+                    '                        Dim nuevoSegApe As String = Console.ReadLine
+                    '                        If (met.salir(nuevoSegApe, "", 0)) Then
+                    '                            If (met.sinDatos(nuevoSegApe)) Then
+                    '                                If (met.modificar(nuevoSegApe, index, emp._SegundoApellido) = False) Then
+                    '                                    Exit Select
+                    '                                End If
+                    '                            Else
+                    '                                Exit Select
+                    '                            End If
+                    '                        Else
+                    '                            Exit Select
+                    '                        End If
+
+                    '                    Case 5
+
+                    '                        Console.Clear()
+                    '                        Dim num As Byte = 0
+                    '                        Dim aux As New ArrayList
+                    '                        Dim modTel As Byte = 10
+                    '                        Console.ForegroundColor = ConsoleColor.Cyan
+                    '                        Console.WriteLine("---------------------------------------------------MODIFICAR TELEFONOS--------------------------------------------------")
+                    '                        Console.SetCursorPosition(47.5, 1)
+                    '                        Console.Write(" (Ingrese ! para salir)")
+                    '                        Console.ForegroundColor = ConsoleColor.White
+                    '                        Console.Write(vbNewLine)
+                    '                        For k As Integer = 0 To emp._tel.GetLength(0) - 1
+
+                    '                            If (emp._tel.GetValue(k, 0) = emp._cedula.Item(index)) Then
+                    '                                If (emp._tel.GetValue(k, 1) <> 0) Then
+                    '                                    Console.WriteLine("Teléfono " & num + 1 & ": " & emp._tel.GetValue(k, 1))
+                    '                                    num += 1
+                    '                                    aux.Add(k)
+                    '                                End If
+                    '                            End If
+                    '                        Next
+
+                    '                        Console.Write(vbNewLine)
+                    '                        Console.WriteLine("1) Modificar")
+                    '                        Console.WriteLine("2) Eliminar")
+                    '                        Console.Write("Opción: ")
+                    '                        Dim opTel1 As String = Console.ReadLine
+                    '                        If (met.salir(opTel1, "", 0) = False) Then
+                    '                            Exit Select
+                    '                        Else
+                    '                            If (met.sinDatos(opTel1) = False) Then
+                    '                                Exit Select
+                    '                            Else
+                    '                                Dim opTel As Byte = opTel1
+                    '                                If (opTel = 1) Then
+                    '                                    Console.Write(vbNewLine)
+                    '                                    Console.Write("¿Qué telefono desea modificar?: ")
+                    '                                    modTel = Byte.Parse(Console.ReadLine)
+                    '                                    If (met.modificarTel(emp, index, aux, num, modTel, opTel) = False) Then
+                    '                                        opIncorrecta("Ingresó una opción incorrecta")
+                    '                                        Exit Select
+                    '                                    End If
+                    '                                ElseIf (opTel = 2) Then
+                    '                                    If (num > 1) Then
+                    '                                        Console.Write(vbNewLine)
+                    '                                        Console.Write("¿Qué telefono desea eliminar?: ")
+                    '                                        modTel = Byte.Parse(Console.ReadLine)
+                    '                                        If (met.eliminarTel(emp, index, aux, num, modTel, opTel) = False) Then
+                    '                                            opIncorrecta("Ingresó una opción incorrecta")
+                    '                                            Exit Select
+                    '                                        End If
+                    '                                    Else
+                    '                                        opIncorrecta("No puede quedar sin ningún teléfono")
+                    '                                    End If
+                    '                                ElseIf (opTel <> 1 And opTel <> 2) Then
+                    '                                    opIncorrecta("Ingresó una opción incorrecta")
+                    '                                    Exit Select
+                    '                                End If
+                    '                            End If
+                    '                        End If
+
+
+                    '                    Case 6
+
+                    '                        Console.Clear()
+                    '                        Console.ForegroundColor = ConsoleColor.Cyan
+                    '                        Console.WriteLine("--------------------------------------------------MODIFICAR DIRECCION--------------------------------------------------")
+                    '                        Console.SetCursorPosition(47.5, 1)
+                    '                        Console.Write(" (Ingrese ! para salir)")
+                    '                        Console.ForegroundColor = ConsoleColor.White
+                    '                        Console.Write(vbNewLine)
+                    '                        mostrar(emp._direccion, index, "Dirección: ", "Dirección nueva: ")
+                    '                        Dim nuevadireccion As String = Console.ReadLine
+                    '                        If (met.salir(nuevadireccion, "", 0)) Then
+                    '                            If (met.sinDatos(nuevadireccion)) Then
+                    '                                If (met.modificar(nuevadireccion, index, emp._direccion) = False) Then
+                    '                                    Exit Select
+                    '                                End If
+                    '                            Else
+                    '                                Exit Select
+                    '                            End If
+                    '                        Else
+                    '                            Exit Select
+                    '                        End If
+
+                    '                    Case 7
+
+                    '                        Console.Clear()
+                    '                        Console.ForegroundColor = ConsoleColor.Cyan
+                    '                        Console.WriteLine("----------------------------------------------------MODIFICAR SUELDO----------------------------------------------------")
+                    '                        Console.SetCursorPosition(47.5, 1)
+                    '                        Console.Write(" (Ingrese ! para salir)")
+                    '                        Console.ForegroundColor = ConsoleColor.White
+                    '                        Console.Write(vbNewLine)
+                    '                        mostrar(emp._sueldo, index, "Sueldo: ", "Sueldo nuevo: ")
+                    '                        Dim nuevoSueldo As String = Console.ReadLine
+                    '                        If (met.salir(nuevoSueldo, "", 0)) Then
+                    '                            If (met.sinDatos(nuevoSueldo) = False) Then
+                    '                                opIncorrecta("Ingresó una opción incorrecta")
+                    '                                Exit Select
+                    '                            Else
+                    '                                If IsNumeric(nuevoSueldo) Then
+                    '                                    Dim nSueldo As Integer = nuevoSueldo
+                    '                                    emp._sueldo.Insert(index, nSueldo)
+                    '                                    emp._sueldo.RemoveAt(index + 1)
+                    '                                End If
+                    '                            End If
+                    '                        Else
+                    '                            Exit Select
+                    '                        End If
+
+                    '                    Case 8
+
+                    '                        Console.Clear()
+                    '                        Console.ForegroundColor = ConsoleColor.Cyan
+                    '                        Console.WriteLine("----------------------------------------------------MODIFICAR CARGO----------------------------------------------------")
+                    '                        Console.SetCursorPosition(47.5, 1)
+                    '                        Console.Write(" (Ingrese ! para salir)")
+                    '                        Console.ForegroundColor = ConsoleColor.White
+                    '                        Console.Write(vbNewLine)
+                    '                        If (emp._tipoEmpleado.Item(index) = 1) Then
+                    '                            Console.WriteLine("Cargo: Gerente")
+                    '                        ElseIf (emp._tipoEmpleado.Item(index) = 2) Then
+                    '                            Console.WriteLine("Cargo: Operario")
+                    '                        ElseIf (emp._tipoEmpleado.Item(index) = 3) Then
+                    '                            Console.WriteLine("Cargo: Administrativo")
+                    '                        End If
+                    '                        Console.Write(vbNewLine)
+                    '                        Console.Write("Nuevo cargo (1.Gerente 2.Operario 3.Administrativo): ")
+                    '                        Dim nuevoCargo As String = Console.ReadLine
+                    '                        Dim nCargo As Integer
+                    '                        If (met.salir(nCargo, "", 0)) Then
+                    '                            If (met.sinDatos(nuevoCargo)) Then
+                    '                                nCargo = nuevoCargo
+                    '                                emp._tipoEmpleado.Insert(index, nCargo)
+                    '                                emp._tipoEmpleado.RemoveAt(index + 1)
+                    '                            Else
+                    '                                Exit Select
+                    '                            End If
+                    '                        End If
+
+                    '                    Case 0
+
+                    '                        Exit Select
+
+                    '                    Case Else
+
+                    '                        opIncorrecta("Ingresó una opción incorrecta")
+
+                    '                End Select
+
+                    '            Loop
+                    '        Else
+                    '            opIncorrecta("Este usuario no está registrado en el sistema")
+                    '        End If
+                    '    Else
+                    '        Exit Select
+                    '    End If
+                    'Else
+                    '    opIncorrecta("No se encuentran empleados registrados")
+                    '    Exit Select
+                    'End If
+
+                Case 4
+                    ''EN EL BUSCAR, AGREGAR UN WRITE QUE DIGA SI EL EMPLEADO FUE DADO DE BAJA
+                    If (emp._cedula.Count <> 0) Then
+                        Console.Clear()
+                        Console.ForegroundColor = ConsoleColor.Cyan
+                        Console.Write("-------------------------------------------------ELIMINAR EMPLEADOS-------------------------------------------------")
                         Console.Write(vbNewLine)
                         Console.ForegroundColor = ConsoleColor.White
                         Console.Write(vbNewLine)
@@ -424,311 +929,31 @@ Module Module1
                         If (met.sinDatos(cedd) = False) Then
                             Exit Select
                         Else
-                            Dim busCed = cedd
+                            Dim eliminarCed As Integer = cedd
                             For i As Integer = 0 To emp._cedula.Count - 1
-                                If (emp._cedula.Item(i) = busCed) Then
-                                    Console.Clear()
-
-                                    Do While opModificar <> 0
-
-                                        Console.Clear()
-                                        Console.ForegroundColor = ConsoleColor.Cyan
-                                        Console.WriteLine("-------------------------------------------------MODIFICAR EMPLEADOS---------------------------------------------------")
-                                        Console.ForegroundColor = ConsoleColor.White
-                                        Dim verificador As String = emp._cedula.Item(i)
-                                        If (verificador.Length = 8) Then
-                                            Console.WriteLine("Identificación de empleado: " + verificador.Substring(0, 1) + "." + verificador.Substring(1, 3) + "." + verificador.Substring(4, 3) + "-" + verificador.Substring(7, 1))
-                                        ElseIf (verificador.Length = 7) Then
-                                            Console.WriteLine("Identificación de empleado: " + verificador.Substring(0, 3) + "." + verificador.Substring(3, 3) + "-" + verificador.Substring(6, 1))
-                                        End If
-                                        Console.Write(vbNewLine)
-                                        Console.WriteLine("1) Nombre")
-                                        Console.WriteLine("2) Segundo nombre")
-                                        Console.WriteLine("3) Apellido")
-                                        Console.WriteLine("4) Segundo apellido")
-                                        Console.WriteLine("5) Teléfonos")
-                                        Console.WriteLine("6) Dirección")
-                                        Console.WriteLine("7) Sueldo")
-                                        Console.WriteLine("8) Cargo")
-                                        Console.WriteLine("0) Volver")
-                                        Console.Write("Opción: ")
-
-                                        opModificar = Integer.Parse(Console.ReadLine())
-
-                                        Select Case opModificar
-
-                                            Case 1
-
-                                                Console.Clear()
-                                                Console.ForegroundColor = ConsoleColor.Cyan
-                                                Console.WriteLine("-----------------------------------------------------MODIFICAR NOMBRE---------------------------------------------------")
-                                                Console.SetCursorPosition(49, 1)
-                                                Console.Write(" (Ingrese ! para salir)")
-                                                Console.ForegroundColor = ConsoleColor.White
-                                                Console.Write(vbNewLine)
-                                                mostrar(emp._nombre, i, "Nombre: ", "Nombre nuevo: ")
-                                                Dim nuevoNombre As String = Console.ReadLine
-                                                If (met.salir(nuevoNombre, "", 0)) Then
-                                                    If (met.sinDatos(nuevoNombre)) Then
-                                                        If (met.modificar(nuevoNombre, i, emp._nombre) = False) Then
-                                                            Exit Select
-                                                        End If
-                                                    Else
-                                                        Exit Select
-                                                    End If
-                                                Else
-                                                    Exit Select
-                                                End If
-
-                                            Case 2
-
-                                                If (emp._SegundoNombre.Item(i) <> "no") Then
-                                                    Console.Clear()
-                                                    Console.ForegroundColor = ConsoleColor.Cyan
-                                                    Console.WriteLine("-----------------------------------------------MODIFICAR SEGUNDO NOMBRE-------------------------------------------------")
-                                                    Console.SetCursorPosition(47, 1)
-                                                    Console.Write(" (Ingrese ! para salir)")
-                                                    Console.ForegroundColor = ConsoleColor.White
-                                                    Console.Write(vbNewLine)
-                                                    mostrar(emp._SegundoNombre, i, "Segundo nombre: ", "Segundo nombre nuevo: ")
-                                                    Dim nuevoSegNombre As String = Console.ReadLine
-                                                    If (met.salir(nuevoSegNombre, "", 0)) Then
-                                                        If (met.sinDatos(nuevoSegNombre)) Then
-                                                            If (met.modificar(nuevoSegNombre, i, emp._SegundoNombre) = False) Then
-                                                                Exit Select
-                                                            End If
-                                                        Else
-                                                            Exit Select
-                                                        End If
-                                                    Else
-                                                        Exit Select
-                                                    End If
-                                                Else
-                                                    Console.CursorVisible = False
-                                                    opIncorrecta("Este empleado no tiene segundo nombre")
-                                                    Threading.Thread.Sleep(1500)
-                                                    Exit Select
-                                                    Console.CursorVisible = True
-                                                End If
-
-                                            Case 3
-
-                                                Console.Clear()
-                                                Console.ForegroundColor = ConsoleColor.Cyan
-                                                Console.WriteLine("---------------------------------------------------MODIFICAR APELLIDO---------------------------------------------------")
-                                                Console.SetCursorPosition(47.5, 1)
-                                                Console.Write(" (Ingrese ! para salir)")
-                                                Console.ForegroundColor = ConsoleColor.White
-                                                Console.Write(vbNewLine)
-                                                mostrar(emp._apellido, i, "Apellido: ", "Apellido nuevo: ")
-                                                Dim nuevoApe As String = Console.ReadLine
-                                                If (met.salir(nuevoApe, "", 0)) Then
-                                                    If (met.sinDatos(nuevoApe)) Then
-                                                        If (met.modificar(nuevoApe, i, emp._apellido) = False) Then
-                                                            Exit Select
-                                                        End If
-                                                    Else
-                                                        Exit Select
-                                                    End If
-                                                Else
-                                                    Exit Select
-                                                End If
-
-                                            Case 4
-
-                                                Console.Clear()
-                                                Console.ForegroundColor = ConsoleColor.Cyan
-                                                Console.WriteLine("------------------------------------------------MODIFICAR SEGUNDO APELLIDO----------------------------------------------")
-                                                Console.SetCursorPosition(49, 1)
-                                                Console.Write(" (Ingrese ! para salir)")
-                                                Console.ForegroundColor = ConsoleColor.White
-                                                Console.Write(vbNewLine)
-                                                mostrar(emp._SegundoApellido, i, "Segundo apellido: ", "Segundo apellido nuevo: ")
-                                                Dim nuevoSegApe As String = Console.ReadLine
-                                                If (met.salir(nuevoSegApe, "", 0)) Then
-                                                    If (met.sinDatos(nuevoSegApe)) Then
-                                                        If (met.modificar(nuevoSegApe, i, emp._SegundoApellido) = False) Then
-                                                            Exit Select
-                                                        End If
-                                                    Else
-                                                        Exit Select
-                                                    End If
-                                                Else
-                                                    Exit Select
-                                                End If
-
-                                            Case 5
-
-                                                Console.Clear()
-                                                Dim num As Byte = 0
-                                                Dim aux As New ArrayList
-                                                Dim modTel As Byte = 10
-                                                Console.ForegroundColor = ConsoleColor.Cyan
-                                                Console.WriteLine("---------------------------------------------------MODIFICAR TELEFONOS--------------------------------------------------")
-                                                Console.SetCursorPosition(47.5, 1)
-                                                Console.Write(" (Ingrese ! para salir)")
-                                                Console.ForegroundColor = ConsoleColor.White
-                                                Console.Write(vbNewLine)
-                                                For k As Integer = 0 To emp._tel.GetLength(0) - 1
-
-                                                    If (emp._tel.GetValue(k, 0) = emp._cedula.Item(i)) Then
-                                                        If (emp._tel.GetValue(k, 1) <> 0) Then
-                                                            Console.WriteLine("Teléfono " & num + 1 & ": " & emp._tel.GetValue(k, 1))
-                                                            num += 1
-                                                            aux.Add(k)
-                                                        End If
-                                                    End If
-                                                Next
-
-                                                Console.Write(vbNewLine)
-                                                Console.WriteLine("1) Modificar")
-                                                Console.WriteLine("2) Eliminar")
-                                                Console.Write("Opción: ")
-                                                Dim opTel1 As String = Console.ReadLine
-                                                If (met.salir(opTel1, "", 0) = False) Then
-                                                    Exit Select
-                                                Else
-                                                    If (met.sinDatos(opTel1) = False) Then
-                                                        Exit Select
-                                                    Else
-                                                        Dim opTel As Byte = opTel1
-                                                        If (opTel = 1) Then
-                                                            Console.Write(vbNewLine)
-                                                            Console.Write("¿Qué telefono desea modificar?: ")
-                                                            modTel = Byte.Parse(Console.ReadLine)
-                                                            If (met.modificarTel(emp, i, aux, num, modTel, opTel) = False) Then
-                                                                opIncorrecta("Ingresó una opción incorrecta")
-                                                                Exit Select
-                                                            End If
-                                                        ElseIf (opTel = 2) Then
-                                                            If (num > 1) Then
-                                                                Console.Write(vbNewLine)
-                                                                Console.Write("¿Qué telefono desea eliminar?: ")
-                                                                modTel = Byte.Parse(Console.ReadLine)
-                                                                If (met.eliminarTel(emp, i, aux, num, modTel, opTel) = False) Then
-                                                                    opIncorrecta("Ingresó una opción incorrecta")
-                                                                    Exit Select
-                                                                End If
-                                                            Else
-                                                                opIncorrecta("No puede quedar sin ningún teléfono")
-                                                            End If
-                                                        ElseIf (opTel <> 1 And opTel <> 2) Then
-                                                            opIncorrecta("Ingresó una opción incorrecta")
-                                                            Exit Select
-                                                        End If
-                                                    End If
-                                                End If
-
-
-                                            Case 6
-
-                                                Console.Clear()
-                                                Console.ForegroundColor = ConsoleColor.Cyan
-                                                Console.WriteLine("--------------------------------------------------MODIFICAR DIRECCION--------------------------------------------------")
-                                                Console.SetCursorPosition(47.5, 1)
-                                                Console.Write(" (Ingrese ! para salir)")
-                                                Console.ForegroundColor = ConsoleColor.White
-                                                Console.Write(vbNewLine)
-                                                mostrar(emp._direccion, i, "Dirección: ", "Dirección nueva: ")
-                                                Dim nuevadireccion As String = Console.ReadLine
-                                                If (met.salir(nuevadireccion, "", 0)) Then
-                                                    If (met.sinDatos(nuevadireccion)) Then
-                                                        If (met.modificar(nuevadireccion, i, emp._direccion) = False) Then
-                                                            Exit Select
-                                                        End If
-                                                    Else
-                                                        Exit Select
-                                                    End If
-                                                Else
-                                                    Exit Select
-                                                End If
-
-                                            Case 7
-
-                                                Console.Clear()
-                                                Console.ForegroundColor = ConsoleColor.Cyan
-                                                Console.WriteLine("----------------------------------------------------MODIFICAR SUELDO----------------------------------------------------")
-                                                Console.SetCursorPosition(47.5, 1)
-                                                Console.Write(" (Ingrese ! para salir)")
-                                                Console.ForegroundColor = ConsoleColor.White
-                                                Console.Write(vbNewLine)
-                                                mostrar(emp._sueldo, i, "Sueldo: ", "Sueldo nuevo: ")
-                                                Dim nuevoSueldo As String = Console.ReadLine
-                                                If (met.salir(nuevoSueldo, "", 0)) Then
-                                                    If (met.sinDatos(nuevoSueldo) = False) Then
-                                                        opIncorrecta("Ingresó una opción incorrecta")
-                                                        Exit Select
-                                                    Else
-                                                        If IsNumeric(nuevoSueldo) Then
-                                                            Dim nSueldo As Integer = nuevoSueldo
-                                                            emp._sueldo.Insert(i, nSueldo)
-                                                            emp._sueldo.RemoveAt(i + 1)
-                                                        End If
-                                                    End If
-                                                Else
-                                                    Exit Select
-                                                End If
-
-                                            Case 8
-
-                                                Console.Clear()
-                                                Console.ForegroundColor = ConsoleColor.Cyan
-                                                Console.WriteLine("----------------------------------------------------MODIFICAR CARGO----------------------------------------------------")
-                                                Console.SetCursorPosition(47.5, 1)
-                                                Console.Write(" (Ingrese ! para salir)")
-                                                Console.ForegroundColor = ConsoleColor.White
-                                                Console.Write(vbNewLine)
-                                                If (emp._tipoEmpleado.Item(i) = 1) Then
-                                                    Console.WriteLine("Cargo: Gerente")
-                                                ElseIf (emp._tipoEmpleado.Item(i) = 2) Then
-                                                    Console.WriteLine("Cargo: Operario")
-                                                ElseIf (emp._tipoEmpleado.Item(i) = 3) Then
-                                                    Console.WriteLine("Cargo: Administrativo")
-                                                End If
-                                                Console.Write(vbNewLine)
-                                                Console.Write("Nuevo cargo (1.Gerente 2.Operario 3.Administrativo): ")
-                                                Dim nuevoCargo As String = Console.ReadLine
-                                                Dim nCargo As Integer
-                                                If (met.salir(nCargo, "", 0)) Then
-                                                    If (met.sinDatos(nuevoCargo)) Then
-                                                        nCargo = nuevoCargo
-                                                        emp._tipoEmpleado.Insert(i, nCargo)
-                                                        emp._tipoEmpleado.RemoveAt(i + 1)
-                                                    Else
-                                                        Exit Select
-                                                    End If
-                                                End If
-
-                                            Case 0
-
-                                                Exit Select
-
-                                            Case Else
-
-                                                opIncorrecta("Ingresó una opción incorrecta")
-
-                                        End Select
-                                    Loop
-                                Else
-                                    opIncorrecta("Este usuario no está registrado en el sistema")
-                                    busCed = Nothing
-                                    cedd = Nothing
-
+                                If (emp._cedula.Item(i) = eliminarCed) Then
+                                    Console.Write("¿Desea dar de baja a este empleado?: (s/n)")
+                                    Dim opcion As Char = Console.ReadLine
+                                    If opcion = "s" Then
+                                        For k As Integer = 0 To emp._bajaLogica.GetLength(0) - 1
+                                            If (emp._bajaLogica.GetValue(k, 0) = emp._cedula.Item(i)) Then
+                                                emp._bajaLogica.SetValue(0, k, 1)
+                                            End If
+                                        Next
+                                        opIncorrecta("Empleado eliminado con éxito")
+                                        Exit Select
+                                    ElseIf (opcion = "n") Then
+                                        Exit Select
+                                    ElseIf (opcion <> "s" Or opcion <> "n") Then
+                                        opIncorrecta("Ingresó una opción incorrecta")
+                                        Exit Select
+                                    End If
                                 End If
                             Next
                         End If
                     Else
-                        opIncorrecta("No se encuentran empleados registrados")
-                        Exit Select
+
                     End If
-
-                Case 4
-
-                    Console.Clear()
-                    Console.ForegroundColor = ConsoleColor.Cyan
-                    Console.WriteLine("-------------------------------------------------ELIMINAR EMPLEADOS---------------------------------------------------")
-                    Console.ForegroundColor = ConsoleColor.White
-
 
                 Case 0
 
