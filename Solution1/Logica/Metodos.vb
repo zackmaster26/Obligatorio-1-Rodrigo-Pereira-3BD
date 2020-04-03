@@ -1,18 +1,5 @@
 ﻿Public Class Metodos
 
-    Public Function buscarCedula(i As Integer, emp As Empleado, busCed As String, index As Integer) As Boolean
-
-        If (emp._cedula.Item(i) = busCed) Then
-            If (emp._bajaLogica.GetValue(i, 0) = busCed) Then
-                If (emp._bajaLogica.GetValue(i, 1) = 1) Then
-                    index = i
-                    Return True
-                End If
-            End If
-        End If
-        Return False
-    End Function
-
     Public Function salir(op As String, texto As String, ms As Integer) As Boolean
         If (op = "!") Then
             Console.Write(vbNewLine)

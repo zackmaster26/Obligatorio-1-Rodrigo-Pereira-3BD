@@ -1,6 +1,6 @@
 ﻿Public Class Calculo
 
-    Public Function MontoTotal(emp As Empleado)
+    Public Function montoTotal(emp As Empleado)
 
         Dim sueldo As Double
         Dim total As Integer
@@ -33,7 +33,7 @@
         Return total
     End Function
 
-    Public Function SueldoNeto(emp As Empleado, i As Integer)
+    Public Function sueldoNeto(emp As Empleado, i As Integer)
         Dim diferencia As Double
         Dim sueldo As Integer
         Dim total As Double
