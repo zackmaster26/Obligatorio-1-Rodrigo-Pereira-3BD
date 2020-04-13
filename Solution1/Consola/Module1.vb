@@ -20,7 +20,6 @@ Module Module1
     Private tipo As Char
     Private dire As String
     Private opcion As Char
-    Private salirBoolean As Boolean = False
     Private contador As Integer = 0
     Private bajaLogica As Integer = 0
 
@@ -38,8 +37,8 @@ Module Module1
             Console.WriteLine(vbNewLine)
             Console.WriteLine("1) Registro de Empleados")
             Console.WriteLine("2) Importe total a pagar por concepto de sueldo")
-            Console.WriteLine("3) Modificación de empleados")
-            Console.WriteLine("4) Dar de baja empleados")
+            Console.WriteLine("3) Modificación de Empleados")
+            Console.WriteLine("4) Dar de baja Empleado")
             Console.WriteLine("0) Salir")
             Console.Write(vbNewLine)
             Console.Write("Opción: ")
@@ -156,7 +155,7 @@ Module Module1
                                 vaciar()
                                 Exit Select
                             Else
-                                If (ingresarString("Segundo nombre (si no posee digite 0): ", nom2.ToUpper) = False) Then
+                                If (ingresarString("Segundo nombre: ", nom2.ToUpper) = False) Then
                                     vaciar()
                                     Exit Select
                                 End If
@@ -748,7 +747,7 @@ Module Module1
                         Console.Write(vbNewLine)
                         Console.ForegroundColor = ConsoleColor.White
                         Console.Write(vbNewLine)
-                        Console.Write("Cedula del empleado: ")
+                        Console.Write("Cédula del empleado: ")
                         Dim busCed As String = Console.ReadLine()
 
                         If salir(busCed) Then
@@ -763,9 +762,9 @@ Module Module1
                                                 Console.ForegroundColor = ConsoleColor.Red
                                                 Console.Write("¿Desea dar de baja a este empleado? (s/n): ")
                                                 Console.ForegroundColor = ConsoleColor.White
-                                                Dim opcion As Char = Console.ReadLine
+                                                Dim opcion As Char = Console.ReadLine.ToUpper
 
-                                                If opcion = "s" Then
+                                                If opcion = "S" Then
 
                                                     For x As Integer = 0 To datos._bajaLogica.GetLength(0) - 1
                                                         If (datos._bajaLogica.GetValue(x, 0) = datos._cedula.Item(k)) Then
@@ -777,11 +776,11 @@ Module Module1
 
                                                     Exit Select
 
-                                                ElseIf (opcion = "n") Then
+                                                ElseIf (opcion = "N") Then
 
                                                     Exit Select
 
-                                                ElseIf (opcion <> "s" Or opcion <> "n") Then
+                                                ElseIf (opcion <> "S" Or opcion <> "N") Then
 
                                                     opIncorrecta("Ingresó una opción incorrecta")
                                                     Exit Select
@@ -792,9 +791,6 @@ Module Module1
                                                 opIncorrecta("El empleado ya fue dado de baja")
                                             End If
                                         End If
-                                    Else
-                                        opIncorrecta("La cédula ingresada no es correcta")
-                                        Exit Select
                                     End If
                                 Else
                                     opIncorrecta("No se deben ingresar caracteres")

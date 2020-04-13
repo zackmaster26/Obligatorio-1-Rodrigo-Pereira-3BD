@@ -171,19 +171,4 @@
         Return True
     End Function
 
-    Public Function buscarEmpleado(i As Integer, ced As Integer, datos As Datos, index As Integer)
-
-        If (datos._cedula.Item(i) = ced) Then
-            If (datos._bajaLogica.GetValue(i, 0) = ced) Then
-                If (datos._bajaLogica.GetValue(i, 1) = 0) Then
-                    index = i
-                    Return index
-                ElseIf (datos._bajaLogica.GetValue(i, 1) = 1) Then
-                    Return -1
-                End If
-            End If
-        End If
-
-    End Function
-
 End Class
